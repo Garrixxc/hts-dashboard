@@ -15,12 +15,11 @@ inject_global_css()
 
 page_header(
     "Automated Classification AI",
-    "Apply deep semantic logic to complex product specifications. Receive instant HTS alignment with regulatory reasoning and confidence metrics.",
-    icon="🛡️"
+    "Apply deep semantic logic to complex product specifications. Receive instant HTS alignment with regulatory reasoning and confidence metrics."
 )
 
 # Example descriptions
-st.markdown('<h3 class="section-title" style="font-size: 20px; margin-top: 24px;">💡 Try an Example</h3>', unsafe_allow_html=True)
+st.markdown('<h3 class="section-title" style="font-size: 20px; margin-top: 24px;">Classification Examples</h3>', unsafe_allow_html=True)
 
 examples = [
     "Industrial grade PET packaging containers with integrated screw-top sealing mechanisms for high-pressure beverages.",
@@ -42,7 +41,7 @@ col1, col2 = st.columns([3, 1])
 
 with col1:
     desc = st.text_area(
-        "📝 Product Description",
+        "Product Description",
         value=st.session_state.get("hts_desc", ""),
         placeholder="Describe your product in detail...\n\nInclude:\n• What it's made of (materials)\n• How it's used (purpose/function)\n• Key technical specifications\n• Industry or application\n\nExample: 'Plastic water bottle made of PET, 500ml capacity, with screw cap, used for beverage packaging'",
         height=200,
@@ -50,7 +49,7 @@ with col1:
     )
 
 with col2:
-    st.markdown("### ⚙️ Settings")
+    st.markdown("### Settings")
     k = st.slider(
         "Number of suggestions",
         min_value=1,
@@ -67,7 +66,7 @@ with col2:
     
     st.markdown("<br>", unsafe_allow_html=True)
     classify_button = st.button(
-        "✨ Classify Product",
+        "Classify Product",
         type="primary",
         use_container_width=True
     )
@@ -193,9 +192,9 @@ if classify_button:
                     # Display explanation if generated
                     if st.session_state[explain_key]:
                         explanation_html = textwrap.dedent(f'''
-                        <div class="glass-card" style="margin-top: 16px; margin-bottom: 24px;">
-                            <h4 style="color: var(--primary); margin-bottom: 12px;">🤖 AI Explanation</h4>
-                            <div style="font-size: 14px; line-height: 1.6; color: var(--text-main);">
+                        <div class="glass-card" style="margin-top: 16px; margin-bottom: 24px; border-left: 4px solid var(--primary);">
+                            <h4 style="color: var(--slate-900); margin-bottom: 12px; font-weight: 700;">AI Reasoning</h4>
+                            <div style="font-size: 14px; line-height: 1.6; color: var(--slate-700);">
                                 {st.session_state[explain_key]}
                             </div>
                         </div>
@@ -211,7 +210,7 @@ if classify_button:
                         st.success("Code displayed!")
                 
                 with col2:
-                    if st.button("🔍 View in Browser", key=f"browser_{idx}", use_container_width=True):
+                    if st.button("View Details", key=f"browser_{idx}", use_container_width=True):
                         st.info(f"Search for {r['hts_code']} in the Browser page")
                 
                 with col3:

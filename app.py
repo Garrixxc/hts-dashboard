@@ -11,42 +11,41 @@ st.set_page_config(
 inject_global_css()
 
 # Hero Section
-st.markdown('<div class="gradient-bg" style="padding: 60px 0; margin: -20px -20px 40px -20px; border-radius: 20px; border-bottom: 2px solid var(--accent-primary);">', unsafe_allow_html=True)
+st.markdown('<div class="gradient-bg" style="padding: 60px 0; margin: -20px -20px 40px -20px; border-radius: 20px;">', unsafe_allow_html=True)
 page_header(
     "Customs Intelligence Platform",
-    "On-demand HTS alignment leveraging deep semantic architecture and industrial AI",
-    icon="🛡️"
+    "On-demand HTS alignment leveraging deep semantic architecture and industrial AI"
 )
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Value Propositions
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.markdown('<div class="glass-card" style="text-align: center; border-top: 4px solid var(--accent-primary);"><h3>🛡️ Mitigate Risk</h3><p style="color: var(--text-muted); font-size: 14px;">Eliminate customs penalties with precise, AI-validated classification logic.</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="glass-card" style="text-align: center; border-top: 4px solid var(--primary);"><h3>Mitigate Risk</h3><p style="color: var(--slate-600); font-size: 14px;">Eliminate customs penalties with precise, AI-validated classification logic.</p></div>', unsafe_allow_html=True)
 with col2:
-    st.markdown('<div class="glass-card" style="text-align: center; border-top: 4px solid var(--accent-secondary);"><h3>⚡ Accelerate Entry</h3><p style="color: var(--text-muted); font-size: 14px;">Reduce time-to-market with automated regulatory alignment and duty mapping.</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="glass-card" style="text-align: center; border-top: 4px solid var(--slate-700);"><h3>Accelerate Entry</h3><p style="color: var(--slate-600); font-size: 14px;">Reduce time-to-market with automated regulatory alignment and duty mapping.</p></div>', unsafe_allow_html=True)
 with col3:
-    st.markdown('<div class="glass-card" style="text-align: center; border-top: 4px solid var(--accent-vibrant);"><h3>📈 Scale Intelligence</h3><p style="color: var(--text-muted); font-size: 14px;">Deploy consistent trade compliance logic across global logistics networks.</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="glass-card" style="text-align: center; border-top: 4px solid var(--primary-dark);"><h3>Scale Intelligence</h3><p style="color: var(--slate-600); font-size: 14px;">Deploy consistent trade compliance logic across global logistics networks.</p></div>', unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
 # Main Intelligence Metrics
-st.markdown('<h2 class="section-title">📊 Global Trade Coverage</h2>', unsafe_allow_html=True)
+st.markdown('<h2 class="section-title">Global Trade Coverage</h2>', unsafe_allow_html=True)
 
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    metric_card("HTS Dataset", "2026 Active", "📚")
+    metric_card("HTS Dataset", "2026 Active")
 with col2:
-    metric_card("Intelligence Depth", "35,571", "📈")
+    metric_card("Intelligence Depth", "35,571")
 with col3:
-    metric_card("Search Response", "<150ms", "⚡")
+    metric_card("Search Response", "<150ms")
 with col4:
-    metric_card("Global Reach", "100%", "🌐")
+    metric_card("Global Reach", "100%")
 
 st.markdown("<br>", unsafe_allow_html=True)
 
 # Platform Intelligence Guide
-st.markdown('<h2 class="section-title">🚀 Search & Classification Engine</h2>', unsafe_allow_html=True)
+st.markdown('<h2 class="section-title">Search & Classification Engine</h2>', unsafe_allow_html=True)
 
 guide_content = textwrap.dedent("""
     <div style="padding: 12px;">

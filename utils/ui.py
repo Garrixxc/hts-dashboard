@@ -18,43 +18,41 @@ def inject_global_css() -> None:
             /* CSS VARIABLES - Design Tokens */
             /* ============================================================================ */
             :root {
-                /* Primary Theme Colors - Hyper Vibrant */
-                --primary: #6366f1;          /* Indigo-500 */
-                --primary-vibrant: #4f46e5;  /* Indigo-600 */
-                --secondary: #f59e0b;        /* Amber-500 */
-                --vibrant-green: #10b981;    /* Emerald-500 */
-                --vibrant-rose: #f43f5e;     /* Rose-500 */
+                /* Enterprise Professional Palette */
+                --primary: #2563eb;          /* Blue-600 */
+                --primary-dark: #1e40af;     /* Blue-800 */
+                --slate-900: #0f172a;
+                --slate-800: #1e293b;
+                --slate-700: #334155;
+                --slate-600: #475569;
+                --slate-500: #64748b;
+                --slate-100: #f1f5f9;
+                --slate-50: #f8fafc;
                 
                 /* Layout Backgrounds */
                 --bg-main: #ffffff;
-                --bg-sidebar: #f8fafc;       /* Slate-50 */
+                --bg-sidebar: #0f172a;       /* Slate-900 (High Contrast) */
                 --bg-card: #ffffff;
-                --bg-secondary: #f1f5f9;     /* Slate-100 */
+                --bg-secondary: #f8fafc;
                 
                 /* Typography */
                 --text-main: #1e293b;        /* Slate-800 */
                 --text-muted: #64748b;       /* Slate-500 */
-                --text-on-vibrant: #ffffff;
+                --text-sidebar: #f8fafc;     /* Slate-50 */
                 
                 /* Borders & Shadows */
                 --border-light: #e2e8f0;
-                --shadow-vibrant: 0 10px 15px -3px rgba(99, 102, 241, 0.1);
+                --shadow-soft: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                --shadow-premium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
-                /* LEGACY ALIASES - Support for old variable names */
+                /* ALIASES */
                 --accent-primary: var(--primary);
-                --accent-secondary: var(--secondary);
-                --accent-vibrant: var(--vibrant-green);
-                --accent-blue: var(--primary);
-                --accent-purple: var(--primary-vibrant);
-                --accent-amber: var(--secondary);
-                --accent-orange: #f97316;    /* Orange-500 */
-                --accent-gold: #f59e0b;
-                --accent-stone: var(--text-muted);
-                
-                --success: var(--vibrant-green);
-                --warning: var(--secondary);
-                --error: var(--vibrant-rose);
-                --info: #0ea5e9;             /* Sky-500 */
+                --accent-secondary: var(--slate-700);
+                --accent-vibrant: #10b981;
+                --success: #059669;
+                --warning: #d97706;
+                --error: #dc2626;
+                --info: #0284c7;
                 
                 --bg-dark: var(--bg-main);
                 --bg-card: white;
@@ -81,23 +79,46 @@ def inject_global_css() -> None:
             
             [data-testid="stSidebar"] {
                 background-color: var(--bg-sidebar) !important;
-                border-right: 1px solid var(--border-light) !important;
+                border-right: none !important;
+                box-shadow: 10px 0 15px -3px rgba(0, 0, 0, 0.1) !important;
             }
 
             [data-testid="stHeader"] {
-                background-color: rgba(255, 255, 255, 0.8) !important;
-                backdrop-filter: blur(10px);
+                background-color: transparent !important;
             }
 
-            /* Fix Sidebar Text & Icons */
+            /* FIX SIDEBAR ICON & TEXT VISIBILITY */
+            [data-testid="stSidebar"] [data-testid="stVerticalBlock"] {
+                padding-top: 2rem;
+            }
+            
+            [data-testid="stSidebar"] [data-testid="stSidebarNav"] {
+                padding-bottom: 2rem;
+            }
+
             [data-testid="stSidebar"] * {
-                color: var(--text-main) !important;
+                color: var(--text-sidebar) !important;
+            }
+            
+            /* Make Nav Icons Pop */
+            [data-testid="stSidebar"] .st-emotion-cache-6qob1r svg,
+            [data-testid="stSidebar"] .st-emotion-cache-1v07afm svg {
+                color: var(--primary) !important;
+                filter: drop-shadow(0 0 5px rgba(37, 99, 235, 0.4));
             }
 
-            /* Global Typography Fixes */
-            h1, h2, h3, h4, h5, h6, p, li, label, .stMarkdown {
-                color: var(--text-main) !important;
+            /* Global Typography - Clean Industrial */
+            h1, h2, h3, h4, .hero-title, .section-title {
+                color: var(--slate-900) !important;
+                font-family: 'Inter', -apple-system, sans-serif !important;
+                font-weight: 700 !important;
+                letter-spacing: -0.01em !important;
+            }
+            
+            p, li, label, .stMarkdown {
+                color: var(--slate-700) !important;
                 font-family: 'Inter', sans-serif !important;
+                line-height: 1.6;
             }
 
             /* ============================================================================ */
@@ -106,28 +127,35 @@ def inject_global_css() -> None:
             
             /* Standard Buttons */
             .stButton > button {
-                background: var(--bg-secondary) !important;
-                color: var(--text-main) !important;
+                background: white !important;
+                color: var(--slate-800) !important;
                 border: 1px solid var(--border-light) !important;
-                border-radius: 8px !important;
-                font-weight: 500 !important;
-                transition: all 0.2s ease !important;
+                border-radius: 6px !important;
+                font-weight: 600 !important;
+                padding: 0.5rem 1rem !important;
+                box-shadow: var(--shadow-soft) !important;
+                transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
             }
             
             .stButton > button:hover {
                 border-color: var(--primary) !important;
                 color: var(--primary) !important;
-                transform: translateY(-1px);
-                box-shadow: var(--shadow-vibrant);
+                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1) !important;
             }
 
-            /* Primary/Action Buttons */
+            /* Action Buttons (Primary) */
             div[data-testid="stFormSubmitButton"] button, 
+            button[kind="primary"],
             .btn-primary {
-                background: linear-gradient(135deg, var(--primary), var(--primary-vibrant)) !important;
+                background: var(--primary) !important;
                 color: white !important;
                 border: none !important;
-                box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4) !important;
+                box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39) !important;
+            }
+            
+            div[data-testid="stFormSubmitButton"] button:hover {
+                background: var(--primary-dark) !important;
+                transform: translateY(-1px);
             }
             
             /* Text Inputs & Areas */
@@ -609,18 +637,18 @@ def result_card(
             <div>
                 <div class="hts-code">{hts_code}</div>
                 <div class="hts-title">{title}</div>
-                {f'<div style="margin-top: 8px;">{duty_html}</div>' if duty_html else ''}
+                {f'<div style="margin-top: 12px;">{duty_html}</div>' if duty_html else ''}
             </div>
             <div>
                 {confidence_html}
             </div>
         </div>
         {similarity_html}
-        <details style="margin-top: 16px;">
-            <summary style="cursor: pointer; color: var(--text-muted); font-size: 14px;">
-                Show full description
+        <details style="margin-top: 20px; border-top: 1px solid var(--border-light); padding-top: 12px;">
+            <summary style="cursor: pointer; color: var(--slate-500); font-size: 13px; font-weight: 500;">
+                VIEW TECHNICAL SPECIFICATION
             </summary>
-            <div class="hts-description">{description}</div>
+            <div class="hts-description" style="padding-top: 12px;">{description}</div>
         </details>
         {explain_button}
     """).strip()
@@ -631,16 +659,15 @@ def result_card(
     )
 
 
-def metric_card(label: str, value: str, icon: str = "📊") -> None:
-    """Render a metric card with glassmorphism."""
+def metric_card(label: str, value: str) -> None:
+    """Render a metric card with professional industrial styling."""
     content = textwrap.dedent(f"""
-        <div style="text-align: center;">
-            <div style="font-size: 36px; margin-bottom: 8px;">{icon}</div>
-            <div style="font-size: 32px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">
-                {value}
-            </div>
-            <div style="font-size: 14px; color: var(--text-muted);">
+        <div style="text-align: left; padding: 4px;">
+            <div style="font-size: 12px; font-weight: 600; color: var(--slate-500); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">
                 {label}
+            </div>
+            <div style="font-size: 28px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.02em;">
+                {value}
             </div>
         </div>
     """).strip()
