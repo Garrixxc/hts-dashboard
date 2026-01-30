@@ -7,6 +7,7 @@ using Plotly for tree diagrams and navigation.
 
 import streamlit as st
 import plotly.graph_objects as go
+import textwrap
 from typing import List, Dict
 
 
@@ -120,7 +121,7 @@ def render_breadcrumb(path: List[str]) -> None:
         if i > 0:
             breadcrumb_html += '<span style="color: rgba(255, 255, 255, 0.4);">→</span>'
         
-        breadcrumb_html += f'''
+        breadcrumb_html += textwrap.dedent(f'''
             <span style="
                 padding: 6px 12px;
                 background: rgba(76, 201, 240, 0.15);
@@ -130,7 +131,7 @@ def render_breadcrumb(path: List[str]) -> None:
                 font-size: 13px;
                 font-weight: 600;
             ">{item}</span>
-        '''
+        ''').strip()
     
     breadcrumb_html += '</div>'
     
@@ -182,14 +183,14 @@ def hierarchy_explorer(codes: List[Dict[str, str]]) -> None:
             with st.expander(f"📁 Chapter {chapter} ({len(chapter_codes)} codes)", expanded=False):
                 for code_data in chapter_codes[:10]:  # Limit to first 10 for performance
                     st.markdown(
-                        f"""
+                        textwrap.dedent(f"""
                         <div class="glass-card" style="padding: 12px; margin-bottom: 8px;">
                             <strong style="color: var(--accent-blue);">{code_data.get('hts_code')}</strong>
                             <p style="margin: 4px 0 0 0; font-size: 14px; color: rgba(255, 255, 255, 0.8);">
                                 {code_data.get('title', 'No title')[:100]}
                             </p>
                         </div>
-                        """,
+                        """),
                         unsafe_allow_html=True
                     )
                 

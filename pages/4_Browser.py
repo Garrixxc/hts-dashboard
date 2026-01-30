@@ -1,4 +1,5 @@
 import streamlit as st
+import textwrap
 from utils.supabase_db import get_hts_page, count_hts_rows
 from utils.ui import inject_global_css, page_header, glass_card
 from utils.duty_rates import get_duty_category
@@ -68,25 +69,25 @@ for idx, r in enumerate(rows):
     duty_class = duty_classes.get(duty_category, "duty-medium")
     duty_tag_html = f'<span class="duty-tag {duty_class}">{duty_category} Duty</span>'
     
-    content = f"""
-    <div style="margin-bottom: 16px;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-            <div>
-                <div class="hts-code">{r['hts_code']}</div>
-                <div class="hts-title">{r['title']}</div>
+    content = textwrap.dedent(f"""
+        <div style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                <div>
+                    <div class="hts-code">{r['hts_code']}</div>
+                    <div class="hts-title">{r['title']}</div>
+                </div>
+                <div>
+                    {duty_tag_html}
+                </div>
             </div>
-            <div>
-                {duty_tag_html}
-            </div>
+            <details style="margin-top: 12px;">
+                <summary style="cursor: pointer; color: rgba(255, 255, 255, 0.7); font-size: 14px;">
+                    Show full description
+                </summary>
+                <div class="hts-description">{r.get('normalized_text', 'No additional details available')}</div>
+            </details>
         </div>
-        <details style="margin-top: 12px;">
-            <summary style="cursor: pointer; color: rgba(255, 255, 255, 0.7); font-size: 14px;">
-                Show full description
-            </summary>
-            <div class="hts-description">{r.get('normalized_text', 'No additional details available')}</div>
-        </details>
-    </div>
-    """
+    """).strip()
     
     st.markdown(
         f'<div class="result-card">{content}</div>',
@@ -105,7 +106,7 @@ with col_prev:
 
 with col_info:
     st.markdown(
-        f'<p style="text-align: center; color: rgba(255, 255, 255, 0.6);">Page {page} of {total_pages} • {total:,} total codes</p>',
+        textwrap.dedent(f'<p style="text-align: center; color: rgba(255, 255, 255, 0.6);">Page {page} of {total_pages} • {total:,} total codes</p>'),
         unsafe_allow_html=True
     )
 
@@ -118,34 +119,34 @@ with col_next:
 with st.sidebar:
     st.markdown("### 📚 Browser Info")
     
-    info = f"""
-    <div class="glass-card">
-        <p style="font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.8);">
-            The <strong>HTS Browser</strong> lets you browse all HTS codes sequentially, 
-            perfect for exploring the complete schedule.
-        </p>
-        <br>
-        <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.7);">
-            <li><strong>Total Codes:</strong> {total:,}</li>
-            <li><strong>Per Page:</strong> {page_size}</li>
-            <li><strong>Total Pages:</strong> {total_pages:,}</li>
-            <li><strong>Current Page:</strong> {page}</li>
-        </ul>
-    </div>
-    """
+    info = textwrap.dedent(f"""
+        <div class="glass-card">
+            <p style="font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.8);">
+                The <strong>HTS Browser</strong> lets you browse all HTS codes sequentially, 
+                perfect for exploring the complete schedule.
+            </p>
+            <br>
+            <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.7);">
+                <li><strong>Total Codes:</strong> {total:,}</li>
+                <li><strong>Per Page:</strong> {page_size}</li>
+                <li><strong>Total Pages:</strong> {total_pages:,}</li>
+                <li><strong>Current Page:</strong> {page}</li>
+            </ul>
+        </div>
+    """).strip()
     st.markdown(info, unsafe_allow_html=True)
     
     st.markdown("<br>", unsafe_allow_html=True)
     
-    tips = """
-    <div class="glass-card">
-        <h4 style="color: var(--accent-blue); margin-bottom: 12px;">💡 Tips:</h4>
-        <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
-            <li>Use page number to jump directly</li>
-            <li>Click details to expand descriptions</li>
-            <li>Note duty rate categories</li>
-            <li>Use Search for specific queries</li>
-        </ul>
-    </div>
-    """
+    tips = textwrap.dedent("""
+        <div class="glass-card">
+            <h4 style="color: var(--accent-blue); margin-bottom: 12px;">💡 Tips:</h4>
+            <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
+                <li>Use page number to jump directly</li>
+                <li>Click details to expand descriptions</li>
+                <li>Note duty rate categories</li>
+                <li>Use Search for specific queries</li>
+            </ul>
+        </div>
+    """).strip()
     st.markdown(tips, unsafe_allow_html=True)

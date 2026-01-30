@@ -1,4 +1,5 @@
 import streamlit as st
+import textwrap
 from utils.supabase_db import supabase
 from utils.ui import inject_global_css, page_header, glass_card
 
@@ -111,13 +112,13 @@ if search_button or 'chunks_loaded' not in st.session_state:
                             st.markdown("**Content:**")
                             content = chunk.get('normalized_text', 'No content available')
                             st.markdown(
-                                f"""
+                                textwrap.dedent(f"""
                                 <div class="glass-card" style="padding: 16px; margin-top: 8px;">
                                     <p style="font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.8); margin: 0;">
                                         {content[:500]}{'...' if len(content) > 500 else ''}
                                     </p>
                                 </div>
-                                """,
+                                """),
                                 unsafe_allow_html=True
                             )
                         
@@ -125,13 +126,13 @@ if search_button or 'chunks_loaded' not in st.session_state:
                             st.markdown("**Metadata**")
                             
                             # Display metadata
-                            metadata_html = f"""
+                            metadata_html = textwrap.dedent(f"""
                             <div class="glass-card" style="padding: 12px; font-size: 13px;">
                                 <p><strong>ID:</strong> {chunk.get('id', 'N/A')}</p>
                                 <p><strong>Has Embedding:</strong> {'✅ Yes' if chunk.get('embedding') else '❌ No'}</p>
                                 <p><strong>Embedding Dim:</strong> {len(chunk.get('embedding', [])) if chunk.get('embedding') else 'N/A'}</p>
                             </div>
-                            """
+                            """).strip()
                             st.markdown(metadata_html, unsafe_allow_html=True)
                         
                         # Action buttons
@@ -178,7 +179,7 @@ with st.sidebar:
     st.markdown("### 📚 About Chunk Browser")
     
     st.markdown(
-        """
+        textwrap.dedent("""
         <div class="glass-card">
             <p style="font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.8);">
                 The <strong>Chunk Browser</strong> lets you explore the raw knowledge base 
@@ -195,14 +196,14 @@ with st.sidebar:
                 <li>Vector embedding</li>
             </ul>
         </div>
-        """,
+        """),
         unsafe_allow_html=True
     )
     
     st.markdown("<br>", unsafe_allow_html=True)
     
     st.markdown(
-        """
+        textwrap.dedent("""
         <div class="glass-card">
             <h4 style="color: var(--accent-blue); margin-bottom: 12px;">Use Cases:</h4>
             <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
@@ -213,14 +214,14 @@ with st.sidebar:
                 <li>Quality assurance</li>
             </ul>
         </div>
-        """,
+        """),
         unsafe_allow_html=True
     )
     
     st.markdown("<br>", unsafe_allow_html=True)
     
     st.markdown(
-        """
+        textwrap.dedent("""
         <div class="glass-card">
             <h4 style="color: var(--accent-purple); margin-bottom: 12px;">Quick Stats:</h4>
             <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
@@ -230,6 +231,6 @@ with st.sidebar:
                 <li>🎯 Full-text filtering</li>
             </ul>
         </div>
-        """,
+        """),
         unsafe_allow_html=True
     )

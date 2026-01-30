@@ -1,4 +1,5 @@
 import streamlit as st
+import textwrap
 from utils.search import semantic_search_hts
 from utils.ui import inject_global_css, page_header, result_card
 from utils.duty_rates import get_duty_category
@@ -87,7 +88,8 @@ with st.expander("🔧 Advanced Filters", expanded=False):
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-search_button = st.button("🔎 Search", type="primary", use_container_width=False)
+# Search button (removed type="primary" because it sometimes messes with alignment)
+search_button = st.button("🔎 Search", use_container_width=False)
 
 # Search logic
 if search_button:
@@ -158,15 +160,13 @@ if search_button:
                             st.code(r['hts_code'], language=None)
                         if st.button("🔖", key=f"save_{idx}", help="Bookmark"):
                             st.success("Saved!")
-                        if st.button("📊", key=f"stats_{idx}", help="View stats"):
-                            st.info("Stats coming soon!")
 
 # Sidebar info
 with st.sidebar:
     st.markdown("### 🎯 Search Tips")
     
     st.markdown(
-        """
+        textwrap.dedent("""
         <div class="glass-card">
             <h4 style="color: var(--accent-blue); margin-bottom: 12px;">How Search Works:</h4>
             <p style="font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.8);">
@@ -174,14 +174,14 @@ with st.sidebar:
                 It can match synonyms, technical terms, and related concepts.
             </p>
         </div>
-        """,
+        """),
         unsafe_allow_html=True
     )
     
     st.markdown("<br>", unsafe_allow_html=True)
     
     st.markdown(
-        """
+        textwrap.dedent("""
         <div class="glass-card">
             <h4 style="color: var(--accent-purple); margin-bottom: 12px;">Search Strategies:</h4>
             <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
@@ -192,7 +192,7 @@ with st.sidebar:
                 <li><strong>Industry terms</strong> for context</li>
             </ul>
         </div>
-        """,
+        """),
         unsafe_allow_html=True
     )
     
@@ -200,7 +200,7 @@ with st.sidebar:
     
     # Quick stats
     st.markdown(
-        """
+        textwrap.dedent("""
         <div class="glass-card">
             <h4 style="color: var(--accent-pink); margin-bottom: 12px;">Database Stats:</h4>
             <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
@@ -210,6 +210,6 @@ with st.sidebar:
                 <li>🎯 95%+ accuracy</li>
             </ul>
         </div>
-        """,
+        """),
         unsafe_allow_html=True
     )

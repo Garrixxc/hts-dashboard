@@ -6,12 +6,13 @@ modern components, and utilities for building a premium dashboard experience.
 """
 
 import streamlit as st
+import textwrap
 
 
 def inject_global_css() -> None:
     """Inject enhanced global CSS with glassmorphism and modern design."""
     st.markdown(
-        """
+        textwrap.dedent("""
         <style>
             /* ============================================================================ */
             /* CSS VARIABLES - Design Tokens */
@@ -443,7 +444,7 @@ def inject_global_css() -> None:
                 }
             }
         </style>
-        """,
+        """),
         unsafe_allow_html=True,
     )
 
@@ -453,12 +454,12 @@ def page_header(title: str, subtitle: str | None = None, icon: str = "") -> None
     icon_html = f'<span style="margin-right: 12px;">{icon}</span>' if icon else ""
     
     st.markdown(
-        f"""
+        textwrap.dedent(f"""
         <div class="animate-fade-in-up">
             <h1 class="hero-title">{icon_html}{title}</h1>
             {f'<p class="subtitle">{subtitle}</p>' if subtitle else ''}
         </div>
-        """,
+        """),
         unsafe_allow_html=True,
     )
 
@@ -474,7 +475,7 @@ def glass_card(content: str, premium: bool = False) -> None:
 
 def feature_card(icon: str, title: str, description: str, extra: str = "") -> None:
     """Render a feature card with icon, title, and description."""
-    content = f"""
+    content = textwrap.dedent(f"""
         <div style="text-align: left;">
             <div style="font-size: 48px; margin-bottom: 16px;">{icon}</div>
             <h3 style="font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px;">
@@ -485,7 +486,7 @@ def feature_card(icon: str, title: str, description: str, extra: str = "") -> No
             </p>
             {f'<div style="margin-top: 12px; font-size: 12px; color: rgba(255, 255, 255, 0.5);">{extra}</div>' if extra else ''}
         </div>
-    """
+    """).strip()
     glass_card(content, premium=False)
 
 
@@ -510,22 +511,22 @@ def confidence_badge(score: float) -> str:
         icon = "?"
         label = "Weak Match"
     
-    return f"""
+    return textwrap.dedent(f"""
         <div class="confidence-badge {badge_class}">
             <span style="font-size: 16px;">{icon}</span>
             <span>{percentage}% - {label}</span>
         </div>
-    """
+    """).strip()
 
 
 def similarity_bar(score: float) -> str:
     """Generate HTML for a similarity progress bar."""
     percentage = int(score * 100)
-    return f"""
+    return textwrap.dedent(f"""
         <div class="similarity-bar">
             <div class="similarity-fill" style="width: {percentage}%;"></div>
         </div>
-    """
+    """).strip()
 
 
 def duty_tag(rate: str) -> str:
@@ -557,13 +558,13 @@ def result_card(
     
     explain_button = ""
     if show_explain:
-        explain_button = """
+        explain_button = textwrap.dedent("""
             <button class="btn-secondary" style="margin-top: 12px; font-size: 13px; padding: 8px 16px;">
                 🤖 Explain this classification
             </button>
-        """
+        """).strip()
     
-    content = f"""
+    content = textwrap.dedent(f"""
         <div class="result-header">
             <div>
                 <div class="hts-code">{hts_code}</div>
@@ -582,7 +583,7 @@ def result_card(
             <div class="hts-description">{description}</div>
         </details>
         {explain_button}
-    """
+    """).strip()
     
     st.markdown(
         f'<div class="result-card">{content}</div>',
@@ -592,7 +593,7 @@ def result_card(
 
 def metric_card(label: str, value: str, icon: str = "📊") -> None:
     """Render a metric card with glassmorphism."""
-    content = f"""
+    content = textwrap.dedent(f"""
         <div style="text-align: center;">
             <div style="font-size: 36px; margin-bottom: 8px;">{icon}</div>
             <div style="font-size: 32px; font-weight: 700; color: var(--accent-blue); margin-bottom: 4px;">
@@ -602,5 +603,5 @@ def metric_card(label: str, value: str, icon: str = "📊") -> None:
                 {label}
             </div>
         </div>
-    """
+    """).strip()
     glass_card(content, premium=False)

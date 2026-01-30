@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+import textwrap
 from utils.ui import inject_global_css, page_header, glass_card
 
 st.set_page_config(
@@ -48,24 +49,24 @@ for var_name, display_name, description in env_vars:
         icon = "❌"
         status = "Missing"
     
-    content = f"""
-    <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px;">
-        <div>
-            <h4 style="margin: 0; color: #fff; font-size: 16px;">{display_name}</h4>
-            <p style="margin: 4px 0 0 0; font-size: 13px; color: rgba(255, 255, 255, 0.6);">
-                {description}
-            </p>
-            <code style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-top: 4px; display: block;">
-                {var_name}
-            </code>
+    content = textwrap.dedent(f"""
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px;">
+            <div>
+                <h4 style="margin: 0; color: #fff; font-size: 16px;">{display_name}</h4>
+                <p style="margin: 4px 0 0 0; font-size: 13px; color: rgba(255, 255, 255, 0.6);">
+                    {description}
+                </p>
+                <code style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-top: 4px; display: block;">
+                    {var_name}
+                </code>
+            </div>
+            <div>
+                <span class="badge {badge_class}">
+                    {icon} {status}
+                </span>
+            </div>
         </div>
-        <div>
-            <span class="badge {badge_class}">
-                {icon} {status}
-            </span>
-        </div>
-    </div>
-    """
+    """).strip()
     
     glass_card(content, premium=False)
 
@@ -77,7 +78,7 @@ st.markdown('<h3 class="section-title" style="font-size: 20px;">📝 Configurati
 col1, col2 = st.columns(2)
 
 with col1:
-    streamlit_cloud = """
+    streamlit_cloud = textwrap.dedent("""
     <div style="padding: 20px;">
         <h4 style="color: var(--accent-blue); margin-bottom: 16px;">☁️ Streamlit Cloud</h4>
         <p style="font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.8);">
@@ -95,11 +96,11 @@ with col1:
             <code>OPENAI_API_KEY = "sk-..."</code>
         </p>
     </div>
-    """
+    """).strip()
     glass_card(streamlit_cloud, premium=False)
 
 with col2:
-    local_dev = """
+    local_dev = textwrap.dedent("""
     <div style="padding: 20px;">
         <h4 style="color: var(--accent-purple); margin-bottom: 16px;">💻 Local Development</h4>
         <p style="font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.8);">
@@ -116,7 +117,7 @@ with col2:
             <code>export OPENAI_API_KEY="sk-..."</code>
         </p>
     </div>
-    """
+    """).strip()
     glass_card(local_dev, premium=False)
 
 st.markdown("<br>", unsafe_allow_html=True)
@@ -127,7 +128,7 @@ st.markdown('<h3 class="section-title" style="font-size: 20px;">ℹ️ System In
 import sys
 import streamlit as st_version
 
-system_info = f"""
+system_info = textwrap.dedent(f"""
 <div style="padding: 20px;">
     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
         <div>
@@ -150,7 +151,7 @@ system_info = f"""
         </div>
     </div>
 </div>
-"""
+""").strip()
 
 glass_card(system_info, premium=True)
 
@@ -158,7 +159,7 @@ glass_card(system_info, premium=True)
 with st.sidebar:
     st.markdown("### 🔒 Security Note")
     
-    security = """
+    security = textwrap.dedent("""
     <div class="glass-card">
         <p style="font-size: 13px; line-height: 1.6; color: rgba(255, 255, 255, 0.8);">
             <strong>⚠️ Important:</strong>
@@ -171,5 +172,5 @@ with st.sidebar:
             <li>Use service role keys carefully</li>
         </ul>
     </div>
-    """
+    """).strip()
     st.markdown(security, unsafe_allow_html=True)

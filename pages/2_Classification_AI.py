@@ -1,4 +1,5 @@
 import streamlit as st
+import textwrap
 from utils.llm import classify_hts
 from utils.ui import inject_global_css, page_header
 from utils.llm_explain import explain_classification
@@ -116,19 +117,19 @@ if classify_button:
                     icon = "?"
                     label = "Weak Match"
                 
-                confidence_html = f'''
+                confidence_html = textwrap.dedent(f'''
                     <div class="confidence-badge {badge_class}">
                         <span style="font-size: 16px;">{icon}</span>
                         <span>{percentage}% - {label}</span>
                     </div>
-                '''
+                ''').strip()
                 
                 # Build similarity bar HTML
-                similarity_html = f'''
+                similarity_html = textwrap.dedent(f'''
                     <div class="similarity-bar">
                         <div class="similarity-fill" style="width: {percentage}%;"></div>
                     </div>
-                '''
+                ''').strip()
                 
                 # Build duty tag HTML
                 duty_classes = {
@@ -141,7 +142,7 @@ if classify_button:
                 duty_html = f'<span class="duty-tag {duty_class}">{duty_category} Duty</span>'
                 
                 # Render the result card
-                result_html = f'''
+                result_html = textwrap.dedent(f'''
                 <div class="result-card">
                     <div class="result-header">
                         <div>
@@ -161,7 +162,7 @@ if classify_button:
                         <div class="hts-description">{r.get('normalized_text', 'No additional details available')}</div>
                     </details>
                 </div>
-                '''
+                ''').strip()
                 
                 st.markdown(result_html, unsafe_allow_html=True)
                 
@@ -191,14 +192,14 @@ if classify_button:
                     
                     # Display explanation if generated
                     if st.session_state[explain_key]:
-                        explanation_html = f'''
+                        explanation_html = textwrap.dedent(f'''
                         <div class="glass-card" style="margin-top: 16px; margin-bottom: 24px;">
                             <h4 style="color: var(--accent-blue); margin-bottom: 12px;">🤖 AI Explanation</h4>
                             <div style="font-size: 14px; line-height: 1.6;">
                                 {st.session_state[explain_key]}
                             </div>
                         </div>
-                        '''
+                        ''').strip()
                         st.markdown(explanation_html, unsafe_allow_html=True)
                 
                 # Action buttons
@@ -207,15 +208,15 @@ if classify_button:
                 with col1:
                     if st.button("📋 Copy Code", key=f"copy_{idx}", use_container_width=True):
                         st.code(r['hts_code'], language=None)
-                        st.success("Code displayed above!")
+                        st.success("Code displayed!")
                 
                 with col2:
                     if st.button("🔍 View in Browser", key=f"browser_{idx}", use_container_width=True):
-                        st.info(f"Navigate to HTS Browser and search for: {r['hts_code']}")
+                        st.info(f"Search for {r['hts_code']} in the Browser page")
                 
                 with col3:
                     if st.button("📊 See Analytics", key=f"analytics_{idx}", use_container_width=True):
-                        st.info("Analytics feature coming soon!")
+                        st.info("Analytics coming soon!")
                 
                 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -224,7 +225,7 @@ with st.sidebar:
     st.markdown("### 💡 Classification Tips")
     
     st.markdown(
-        """
+        textwrap.dedent("""
         <div class="glass-card">
             <h4 style="color: var(--accent-blue); margin-bottom: 12px;">For Best Results:</h4>
             <ul style="font-size: 14px; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
@@ -235,14 +236,14 @@ with st.sidebar:
                 <li><strong>Avoid</strong> brand names</li>
             </ul>
         </div>
-        """,
+        """),
         unsafe_allow_html=True
     )
     
     st.markdown("<br>", unsafe_allow_html=True)
     
     st.markdown(
-        """
+        textwrap.dedent("""
         <div class="glass-card">
             <h4 style="color: var(--accent-purple); margin-bottom: 12px;">Understanding Scores:</h4>
             <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
@@ -252,14 +253,14 @@ with st.sidebar:
                 <li><span class="badge-error" style="padding: 2px 8px; border-radius: 4px;">&lt;60%</span> Weak match</li>
             </ul>
         </div>
-        """,
+        """),
         unsafe_allow_html=True
     )
     
     st.markdown("<br>", unsafe_allow_html=True)
     
     st.markdown(
-        """
+        textwrap.dedent("""
         <div class="glass-card">
             <h4 style="color: var(--accent-pink); margin-bottom: 12px;">Duty Categories:</h4>
             <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
@@ -272,6 +273,6 @@ with st.sidebar:
                 ⚠️ Estimates only. Verify with official sources.
             </p>
         </div>
-        """,
+        """),
         unsafe_allow_html=True
     )
