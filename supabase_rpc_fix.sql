@@ -20,6 +20,9 @@ CREATE EXTENSION IF NOT EXISTS vector;
 DROP FUNCTION IF EXISTS public.match_hts_chunks(vector, int);
 DROP FUNCTION IF EXISTS public.match_hts_chunks(int, vector);
 
+-- Optional: Drop and recreate index to ensure it's clean (run separately if needed)
+-- DROP INDEX IF EXISTS hts_knowledge_chunks_embedding_idx;
+
 -- Create the function with ALPHABETICALLY ORDERED parameters
 -- This matches how the Supabase Python client will call it
 CREATE OR REPLACE FUNCTION public.match_hts_chunks(
@@ -71,10 +74,19 @@ WHERE n.nspname = 'public'
 
 -- 2. Test the function with a dummy vector (adjust dimension as needed)
 -- This should return results if you have data in hts_knowledge_chunks
-SELECT * FROM public.match_hts_chunks(
-  5,  -- match_count
-  (SELECT embedding FROM hts_knowledge_chunks LIMIT 1)  -- Use an actual embedding from your table
-);
+-- SELECT * FROM public.match_hts_chunks(
+--   5,  -- match_count
+--   (SELECT embedding FROM hts_knowledge_chunks WHERE embedding IS NOT NULL LIMIT 1)
+-- );
+
+-- 3. Cleanup & Re-indexing (RUN THESE IF REBUILDING FROM SCRATCH)
+-- a. Clear stale embeddings if starting a full re-embed
+-- UPDATE hts_knowledge_chunks SET embedding = NULL;
+
+-- b. Create HNSW index for fast similarity search
+-- CREATE INDEX hts_knowledge_chunks_embedding_idx ON hts_knowledge_chunks 
+-- USING hnsw (embedding vector_cosine_ops)
+-- WITH (m = 16, ef_construction = 64);
 
 -- ============================================================================
 -- Notes

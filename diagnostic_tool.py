@@ -14,7 +14,7 @@ import sys
 from dotenv import load_dotenv
 
 # Load environment variables
-load_dotenv()
+load_dotenv(".hts_dashboard/.env")
 
 def check_env_vars():
     """Verify all required environment variables are set."""
