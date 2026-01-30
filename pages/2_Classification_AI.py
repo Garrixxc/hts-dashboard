@@ -1,7 +1,7 @@
 import streamlit as st
 import textwrap
 from utils.llm import classify_hts
-from utils.ui import inject_global_css, page_header
+from utils.ui import inject_global_css, page_header, result_card
 from utils.llm_explain import explain_classification
 from utils.duty_rates import get_duty_category
 
@@ -15,11 +15,11 @@ inject_global_css()
 
 page_header(
     "Automated Classification AI",
-    "Apply deep semantic logic to complex product specifications. Receive instant HTS alignment with regulatory reasoning and confidence metrics."
+    "Apply deep semantic logic to complex product specifications. Receive instant HTS alignment with regulatory reasoning."
 )
 
 # Example descriptions
-st.markdown('<h3 class="section-title" style="font-size: 20px; margin-top: 24px;">Classification Examples</h3>', unsafe_allow_html=True)
+st.markdown("### Try An Example")
 
 examples = [
     "Industrial grade PET packaging containers with integrated screw-top sealing mechanisms for high-pressure beverages.",
@@ -43,7 +43,7 @@ with col1:
     desc = st.text_area(
         "Product Description",
         value=st.session_state.get("hts_desc", ""),
-        placeholder="Describe your product in detail...\n\nInclude:\n• What it's made of (materials)\n• How it's used (purpose/function)\n• Key technical specifications\n• Industry or application\n\nExample: 'Plastic water bottle made of PET, 500ml capacity, with screw cap, used for beverage packaging'",
+        placeholder="Describe your product in detail...",
         height=200,
         help="The more detailed your description, the better the AI can classify your product"
     )
@@ -55,13 +55,11 @@ with col2:
         min_value=1,
         max_value=10,
         value=5,
-        help="How many HTS code suggestions to show"
     )
     
     show_explanations = st.checkbox(
         "Show AI explanations",
         value=True,
-        help="Generate detailed explanations for each classification"
     )
     
     st.markdown("<br>", unsafe_allow_html=True)
@@ -74,98 +72,32 @@ with col2:
 # Classification logic
 if classify_button:
     if not desc.strip():
-        st.error("⚠️ Please enter a product description")
+        st.error("Please enter a product description")
     else:
-        with st.spinner("🔍 Analyzing product and searching HTS database..."):
+        with st.spinner("Analyzing product and searching HTS database..."):
             results = classify_hts(desc, k)
         
         if not results:
             st.warning("No results found. Try a different description or broader terms.")
         else:
             st.markdown("---")
-            st.markdown(f'<h2 class="section-title">📦 Top {len(results)} Classifications</h2>', unsafe_allow_html=True)
-            st.markdown(
-                f'<p class="subtitle">Found {len(results)} potential matches. Review confidence scores and explanations below.</p>',
-                unsafe_allow_html=True
-            )
+            st.markdown(f"## Top {len(results)} Classifications")
             
             # Display results
             for idx, r in enumerate(results):
-                # Calculate similarity score
                 similarity = r.get('similarity', 0.85)
-                
-                # Get duty category
                 duty_category = get_duty_category(r['hts_code'])
                 
-                # Build confidence badge HTML
-                percentage = int(similarity * 100)
-                if percentage >= 90:
-                    badge_class = "confidence-high"
-                    icon = "✓"
-                    label = "Excellent Match"
-                elif percentage >= 75:
-                    badge_class = "confidence-medium"
-                    icon = "~"
-                    label = "Good Match"
-                elif percentage >= 60:
-                    badge_class = "confidence-low"
-                    icon = "!"
-                    label = "Fair Match"
-                else:
-                    badge_class = "confidence-very-low"
-                    icon = "?"
-                    label = "Weak Match"
+                # Render result card from UI library
+                result_card(
+                    hts_code=r['hts_code'],
+                    title=r['title'],
+                    description=r.get('normalized_text', 'No additional details available'),
+                    similarity=similarity,
+                    duty_rate=duty_category,
+                )
                 
-                confidence_html = textwrap.dedent(f'''
-                    <div class="confidence-badge {badge_class}">
-                        <span style="font-size: 16px;">{icon}</span>
-                        <span>{percentage}% - {label}</span>
-                    </div>
-                ''').strip()
-                
-                # Build similarity bar HTML
-                similarity_html = textwrap.dedent(f'''
-                    <div class="similarity-bar">
-                        <div class="similarity-fill" style="width: {percentage}%;"></div>
-                    </div>
-                ''').strip()
-                
-                # Build duty tag HTML
-                duty_classes = {
-                    "Free": "duty-free",
-                    "Low": "duty-low",
-                    "Medium": "duty-medium",
-                    "High": "duty-high",
-                }
-                duty_class = duty_classes.get(duty_category, "duty-medium")
-                duty_html = f'<span class="duty-tag {duty_class}">{duty_category} Duty</span>'
-                
-                # Render the result card
-                result_html = textwrap.dedent(f'''
-                <div class="result-card">
-                    <div class="result-header">
-                        <div>
-                            <div class="hts-code">{r['hts_code']}</div>
-                            <div class="hts-title">{r['title']}</div>
-                            <div style="margin-top: 8px;">{duty_html}</div>
-                        </div>
-                        <div>
-                            {confidence_html}
-                        </div>
-                    </div>
-                    {similarity_html}
-                    <details style="margin-top: 16px;">
-                        <summary style="cursor: pointer; color: var(--text-muted); font-size: 14px;">
-                            Show full description
-                        </summary>
-                        <div class="hts-description">{r.get('normalized_text', 'No additional details available')}</div>
-                    </details>
-                </div>
-                ''').strip()
-                
-                st.markdown(result_html, unsafe_allow_html=True)
-                
-                # AI Explanation section (outside the main card)
+                # AI Explanation section
                 if show_explanations:
                     explain_key = f"explain_{idx}_{r['hts_code']}"
                     
@@ -176,7 +108,7 @@ if classify_button:
                     
                     with col_a:
                         if st.button(
-                            "🤖 Generate Explanation" if not st.session_state[explain_key] else "🔄 Regenerate",
+                            "Generate Explanation" if not st.session_state[explain_key] else "Regenerate",
                             key=f"btn_{explain_key}",
                             use_container_width=True
                         ):
@@ -189,89 +121,45 @@ if classify_button:
                                 )
                                 st.session_state[explain_key] = explanation
                     
-                    # Display explanation if generated
                     if st.session_state[explain_key]:
-                        explanation_html = textwrap.dedent(f'''
-                        <div class="glass-card" style="margin-top: 16px; margin-bottom: 24px; border-left: 4px solid var(--primary);">
-                            <h4 style="color: var(--primary); margin-bottom: 12px; font-weight: 700;">AI Reasoning</h4>
-                            <div style="font-size: 14px; line-height: 1.6; color: var(--text-main);">
-                                {st.session_state[explain_key]}
-                            </div>
-                        </div>
-                        ''').strip()
-                        st.markdown(explanation_html, unsafe_allow_html=True)
+                        st.info(f"**AI Reasoning:**\n\n{st.session_state[explain_key]}")
                 
                 # Action buttons
-                col1, col2, col3 = st.columns(3)
-                
-                with col1:
+                btn1, btn2, btn3 = st.columns(3)
+                with btn1:
                     if st.button("📋 Copy Code", key=f"copy_{idx}", use_container_width=True):
                         st.code(r['hts_code'], language=None)
-                        st.success("Code displayed!")
-                
-                with col2:
+                with btn2:
                     if st.button("View Details", key=f"browser_{idx}", use_container_width=True):
-                        st.info(f"Search for {r['hts_code']} in the Browser page")
-                
-                with col3:
-                    if st.button("📊 See Analytics", key=f"analytics_{idx}", use_container_width=True):
-                        st.info("Analytics coming soon!")
+                        st.info(f"HTS Browser link for {r['hts_code']}")
+                with btn3:
+                    st.button("📊 Analytics", key=f"analytics_{idx}", use_container_width=True, disabled=True)
                 
                 st.markdown("<br>", unsafe_allow_html=True)
 
 # Sidebar tips
 with st.sidebar:
-    st.markdown("### 💡 Classification Tips")
+    st.markdown("### Classification Intelligence")
+    st.info("""
+    **Tips for Best Results:**
+    - Be specific about materials
+    - Describe the primary use
+    - Include technical specs
+    - Mention the industry
+    """)
     
-    st.markdown(
-        textwrap.dedent("""
-        <div class="glass-card">
-            <h4 style="color: var(--primary); margin-bottom: 12px;">For Best Results:</h4>
-            <ul style="font-size: 14px; line-height: 1.8; color: var(--text-main);">
-                <li><strong>Be specific</strong> about materials</li>
-                <li><strong>Describe</strong> the primary use</li>
-                <li><strong>Include</strong> technical specs</li>
-                <li><strong>Mention</strong> the industry</li>
-                <li><strong>Avoid</strong> brand names</li>
-            </ul>
-        </div>
-        """),
-        unsafe_allow_html=True
-    )
+    st.markdown("---")
+    st.markdown("#### Confidence Scores")
+    st.markdown("""
+    - **90%+** Excellent match
+    - **75-89%** Good match
+    - **60-74%** Fair match
+    """)
     
-    st.markdown("<br>", unsafe_allow_html=True)
-    
-    st.markdown(
-        textwrap.dedent("""
-        <div class="glass-card">
-            <h4 style="color: var(--secondary); margin-bottom: 12px;">Understanding Scores:</h4>
-            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-main);">
-                <li><span style="color: #3fb950; font-weight: 700;">90%+</span> Excellent match</li>
-                <li><span style="color: var(--primary); font-weight: 700;">75-89%</span> Good match</li>
-                <li><span style="color: var(--secondary); font-weight: 700;">60-74%</span> Fair match</li>
-                <li><span style="color: #f85149; font-weight: 700;">&lt;60%</span> Weak match</li>
-            </ul>
-        </div>
-        """),
-        unsafe_allow_html=True
-    )
-    
-    st.markdown("<br>", unsafe_allow_html=True)
-    
-    st.markdown(
-        textwrap.dedent("""
-        <div class="glass-card">
-            <h4 style="color: var(--accent-secondary); margin-bottom: 12px;">Duty Categories:</h4>
-            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-muted);">
-                <li><span style="color: var(--success); font-weight: 700;">Free</span> 0% duty</li>
-                <li><span style="color: var(--accent-secondary); font-weight: 700;">Low</span> 0-5% duty</li>
-                <li><span style="color: var(--warning); font-weight: 700;">Medium</span> 5-15% duty</li>
-                <li><span style="color: var(--error); font-weight: 700;">High</span> 15%+ duty</li>
-            </ul>
-            <p style="font-size: 11px; color: var(--text-muted); opacity: 0.6; margin-top: 12px;">
-                ⚠️ Estimates only. Verify with official sources.
-            </p>
-        </div>
-        """),
-        unsafe_allow_html=True
-    )
+    st.markdown("---")
+    st.markdown("#### Duty Estimates")
+    st.markdown("""
+    - **Free** 0% duty
+    - **Low** 0-5% duty
+    - **High** 15%+ duty
+    """)

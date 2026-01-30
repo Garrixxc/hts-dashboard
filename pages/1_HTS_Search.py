@@ -19,7 +19,7 @@ page_header(
 )
 
 # Quick examples
-st.markdown('<h3 class="section-title" style="font-size: 20px; margin-top: 24px;">💡 Try These Examples</h3>', unsafe_allow_html=True)
+st.markdown("### Try These Examples")
 
 examples = [
     ("Live purebred horses", "🐴"),
@@ -41,24 +41,23 @@ col1, col2 = st.columns([4, 1])
 
 with col1:
     query = st.text_input(
-        "🔎 Search Query",
+        "Search Query",
         value=st.session_state.get("query", ""),
         placeholder="e.g., 'stainless steel screws', '0101', 'electric motors', 'plastic containers'",
         help="Enter a product description, HTS code fragment, or keywords"
     )
 
 with col2:
-    st.markdown("### ⚙️ Options")
+    st.markdown("### Options")
     k = st.slider(
         "Results",
         min_value=1,
         max_value=20,
         value=10,
-        help="Number of results to display"
     )
 
-# Advanced filters (collapsible)
-with st.expander("🔧 Advanced Filters", expanded=False):
+# Advanced filters
+with st.expander("Advanced Filters", expanded=False):
     col_a, col_b, col_c = st.columns(3)
     
     with col_a:
@@ -68,7 +67,6 @@ with st.expander("🔧 Advanced Filters", expanded=False):
             max_value=1.0,
             value=0.5,
             step=0.05,
-            help="Filter results below this confidence threshold"
         )
     
     with col_b:
@@ -76,27 +74,25 @@ with st.expander("🔧 Advanced Filters", expanded=False):
             "Duty Categories",
             options=["Free", "Low", "Medium", "High"],
             default=[],
-            help="Filter by duty rate category"
         )
     
     with col_c:
         sort_by = st.selectbox(
             "Sort By",
             options=["Relevance", "HTS Code", "Duty Rate"],
-            help="How to order the results"
         )
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# Search button (removed type="primary" because it sometimes messes with alignment)
-search_button = st.button("🔎 Search", use_container_width=False)
+# Search button
+search_button = st.button("Search Database", type="primary")
 
 # Search logic
 if search_button:
     if not query.strip():
-        st.error("⚠️ Please enter a search query")
+        st.error("Please enter a search query")
     else:
-        with st.spinner("🔍 Searching HTS database..."):
+        with st.spinner("Searching HTS database..."):
             results = semantic_search_hts(query, k)
         
         if not results:
@@ -121,95 +117,46 @@ if search_button:
             elif sort_by == "Duty Rate":
                 duty_order = {"Free": 0, "Low": 1, "Medium": 2, "High": 3}
                 filtered_results.sort(key=lambda x: duty_order.get(get_duty_category(x['hts_code']), 2))
-            # Default is relevance (already sorted by similarity)
             
             st.markdown("---")
-            st.markdown(
-                f'<h2 class="section-title">📄 Search Results</h2>',
-                unsafe_allow_html=True
-            )
-            st.markdown(
-                f'<p class="subtitle">Found {len(filtered_results)} matches for "{query}"</p>',
-                unsafe_allow_html=True
-            )
+            st.markdown(f"## Found {len(filtered_results)} matches for '{query}'")
             
             if len(filtered_results) == 0:
                 st.info("No results match your filters. Try adjusting the filter criteria.")
             else:
-                # Display results
                 for idx, r in enumerate(filtered_results):
                     similarity = r.get('similarity', 0.85)
                     duty_category = get_duty_category(r['hts_code'])
                     
-                    # Create two columns: main result and actions
-                    col_result, col_actions = st.columns([5, 1])
-                    
-                    with col_result:
-                        result_card(
-                            hts_code=r['hts_code'],
-                            title=r['title'],
-                            description=r.get('normalized_text', 'No additional details available'),
-                            similarity=similarity,
-                            duty_rate=duty_category,
-                            show_explain=False
-                        )
-                    
-                    with col_actions:
-                        st.markdown("<br><br>", unsafe_allow_html=True)
-                        if st.button("📋", key=f"copy_{idx}", help="Copy code"):
-                            st.code(r['hts_code'], language=None)
-                        if st.button("🔖", key=f"save_{idx}", help="Bookmark"):
-                            st.success("Saved!")
+                    result_card(
+                        hts_code=r['hts_code'],
+                        title=r['title'],
+                        description=r.get('normalized_text', 'No additional details available'),
+                        similarity=similarity,
+                        duty_rate=duty_category,
+                    )
 
 # Sidebar info
 with st.sidebar:
-    st.markdown("### 🎯 Search Tips")
+    st.markdown("### Search Intelligence")
+    st.info("""
+    **How Search Works:**
+    Our AI understands context and meaning, not just keywords. It identifies technical synonyms and industrial applications.
+    """)
     
-    st.markdown(
-        textwrap.dedent("""
-        <div class="glass-card">
-            <h4 style="color: var(--primary); margin-bottom: 12px;">How Search Works:</h4>
-            <p style="font-size: 14px; line-height: 1.6; color: var(--text-main);">
-                Our AI understands <strong>context and meaning</strong>, not just keywords. 
-                It can match synonyms, technical terms, and related concepts.
-            </p>
-        </div>
-        """),
-        unsafe_allow_html=True
-    )
+    st.markdown("---")
+    st.markdown("#### Search Strategies")
+    st.markdown("""
+    - **Broad terms** for exploration
+    - **Specific materials** for precision
+    - **Use cases** for applications
+    - **Code fragments** like '3923'
+    """)
     
-    st.markdown("<br>", unsafe_allow_html=True)
-    
-    st.markdown(
-        textwrap.dedent("""
-        <div class="glass-card">
-            <h4 style="color: var(--secondary); margin-bottom: 12px;">Search Strategies:</h4>
-            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-main);">
-                <li><strong>Broad terms</strong> for exploration</li>
-                <li><strong>Specific materials</strong> for precision</li>
-                <li><strong>Use cases</strong> to find applications</li>
-                <li><strong>Code fragments</strong> like "3923" or "01"</li>
-                <li><strong>Industry terms</strong> for context</li>
-            </ul>
-        </div>
-        """),
-        unsafe_allow_html=True
-    )
-    
-    st.markdown("<br>", unsafe_allow_html=True)
-    
-    # Quick stats
-    st.markdown(
-        textwrap.dedent("""
-        <div class="glass-card">
-            <h4 style="color: #3fb950; margin-bottom: 12px;">Database Stats:</h4>
-            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-main);">
-                <li>📚 35,000+ HTS codes</li>
-                <li>🔍 Semantic search enabled</li>
-                <li>⚡ Sub-2s response time</li>
-                <li>🎯 95%+ accuracy</li>
-            </ul>
-        </div>
-        """),
-        unsafe_allow_html=True
-    )
+    st.markdown("---")
+    st.markdown("#### Database Coverage")
+    st.markdown("""
+    - 📚 35,000+ HTS codes
+    - 🔍 Semantic matching
+    - ⚡ Sub-2s response
+    """)

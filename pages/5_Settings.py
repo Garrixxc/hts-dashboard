@@ -1,4 +1,5 @@
 import os
+import sys
 import streamlit as st
 import textwrap
 from utils.ui import inject_global_css, page_header, glass_card
@@ -13,20 +14,18 @@ inject_global_css()
 
 page_header(
     "Compliance Configuration",
-    "Manage environment variables, secure API gateways, and global system health metrics.",
-    icon="⚙️"
+    "Manage environment variables, secure API gateways, and global system health metrics."
 )
 
 def check_env(name: str) -> tuple[bool, str]:
     """Check if environment variable is set and return status."""
     value = os.environ.get(name)
     if value:
-        # Mask the value for security
         masked = value[:4] + "..." + value[-4:] if len(value) > 8 else "***"
         return True, masked
     return False, "Not set"
 
-st.markdown('<h3 class="section-title" style="font-size: 20px; margin-top: 24px;">🔑 API & Database Keys</h3>', unsafe_allow_html=True)
+st.markdown("### API & Database Configuration")
 
 # Check each environment variable
 env_vars = [
@@ -40,137 +39,59 @@ env_vars = [
 for var_name, display_name, description in env_vars:
     is_set, value = check_env(var_name)
     
-    if is_set:
-        badge_class = "badge-success"
-        icon = "✅"
-        status = "Configured"
-    else:
-        badge_class = "badge-error"
-        icon = "❌"
-        status = "Missing"
-    
-    content = textwrap.dedent(f"""
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px;">
-            <div>
-                <h4 style="margin: 0; color: #fff; font-size: 16px;">{display_name}</h4>
-                <p style="margin: 4px 0 0 0; font-size: 13px; color: rgba(255, 255, 255, 0.6);">
-                    {description}
-                </p>
-                <code style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-top: 4px; display: block;">
-                    {var_name}
-                </code>
-            </div>
-            <div>
-                <span class="badge {badge_class}">
-                    {icon} {status}
-                </span>
-            </div>
-        </div>
-    """).strip()
-    
-    glass_card(content, premium=False)
-
-st.markdown("<br>", unsafe_allow_html=True)
+    with st.container():
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            st.markdown(f"**{display_name}**")
+            st.caption(description)
+            st.code(var_name)
+        with col2:
+            if is_set:
+                st.success("Configured")
+            else:
+                st.error("Missing")
+        st.markdown("---")
 
 # Configuration info
-st.markdown('<h3 class="section-title" style="font-size: 20px;">📝 Configuration Guide</h3>', unsafe_allow_html=True)
+st.markdown("### Configuration Guide")
 
 col1, col2 = st.columns(2)
 
 with col1:
-    streamlit_cloud = textwrap.dedent("""
-    <div style="padding: 20px;">
-        <h4 style="color: var(--accent-primary); margin-bottom: 16px;">☁️ Streamlit Cloud</h4>
-        <p style="font-size: 14px; line-height: 1.6; color: var(--text-muted);">
-            In Streamlit Cloud, these values are stored in:
-        </p>
-        <ol style="font-size: 13px; line-height: 1.8; color: var(--text-muted); margin-top: 12px;">
-            <li>Go to your app dashboard</li>
-            <li>Click <strong>Settings</strong></li>
-            <li>Navigate to <strong>Secrets</strong></li>
-            <li>Add your environment variables in TOML format</li>
-        </ol>
-        <br>
-        <p style="font-size: 12px; color: var(--text-muted); opacity: 0.6;">
-            Example format:<br>
-            <code>OPENAI_API_KEY = "sk-..."</code>
-        </p>
-    </div>
-    """).strip()
-    glass_card(streamlit_cloud, premium=False)
+    st.info("""
+    #### ☁️ Streamlit Cloud
+    In Streamlit Cloud, these values are stored in:
+    1. Go to your app dashboard
+    2. Click **Settings**
+    3. Navigate to **Secrets**
+    4. Add your environment variables in TOML format
+    """)
 
 with col2:
-    local_dev = textwrap.dedent("""
-    <div style="padding: 20px;">
-        <h4 style="color: var(--accent-secondary); margin-bottom: 16px;">💻 Local Development</h4>
-        <p style="font-size: 14px; line-height: 1.6; color: var(--text-muted);">
-            For local development, you can:
-        </p>
-        <ol style="font-size: 13px; line-height: 1.8; color: var(--text-muted); margin-top: 12px;">
-            <li>Export variables in your terminal</li>
-            <li>Use a <code>.env</code> file with python-dotenv</li>
-            <li>Set them in your IDE configuration</li>
-        </ol>
-        <br>
-        <p style="font-size: 12px; color: var(--text-muted); opacity: 0.6;">
-            Example:<br>
-            <code>export OPENAI_API_KEY="sk-..."</code>
-        </p>
-    </div>
-    """).strip()
-    glass_card(local_dev, premium=False)
-
-st.markdown("<br>", unsafe_allow_html=True)
+    st.info("""
+    #### 💻 Local Development
+    For local development, you can:
+    1. Export variables in your terminal
+    2. Use a `.env` file with `python-dotenv`
+    3. Set them in your IDE configuration
+    """)
 
 # System info
-st.markdown('<h3 class="section-title" style="font-size: 20px;">ℹ️ System Information</h3>', unsafe_allow_html=True)
+st.markdown("### System Information")
 
-import sys
-import streamlit as st_version
-
-system_info = textwrap.dedent(f"""
-<div style="padding: 20px;">
-    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
-        <div>
-            <p style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">Python Version</p>
-            <p style="font-size: 16px; color: #fff; font-weight: 600;">{sys.version.split()[0]}</p>
-        </div>
-        <div>
-            <p style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">Streamlit Version</p>
-            <p style="font-size: 16px; color: #fff; font-weight: 600;">{st_version.__version__}</p>
-        </div>
-        <div>
-            <p style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">Platform</p>
-            <p style="font-size: 16px; color: #fff; font-weight: 600;">{sys.platform}</p>
-        </div>
-        <div>
-            <p style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">Environment</p>
-            <p style="font-size: 16px; color: #fff; font-weight: 600;">
-                {"Streamlit Cloud" if os.environ.get("STREAMLIT_SHARING_MODE") else "Local"}
-            </p>
-        </div>
-    </div>
-</div>
-""").strip()
-
-glass_card(system_info, premium=True)
+c1, c2, c3, c4 = st.columns(4)
+with c1: st.metric("Python", sys.version.split()[0])
+with c2: st.metric("Streamlit", st.__version__)
+with c3: st.metric("Platform", sys.platform)
+with c4: st.metric("Environment", "Cloud" if os.environ.get("STREAMLIT_SHARING_MODE") else "Local")
 
 # Sidebar
 with st.sidebar:
-    st.markdown("### 🔒 Security Note")
-    
-    security = textwrap.dedent("""
-    <div class="glass-card">
-        <p style="font-size: 13px; line-height: 1.6; color: var(--text-main);">
-            <strong>⚠️ Important:</strong>
-        </p>
-        <ul style="font-size: 12px; line-height: 1.8; color: var(--text-muted); margin-top: 8px;">
-            <li>Never commit API keys to Git</li>
-            <li>Use environment variables</li>
-            <li>Rotate keys regularly</li>
-            <li>Monitor API usage</li>
-            <li>Use service role keys carefully</li>
-        </ul>
-    </div>
-    """).strip()
-    st.markdown(security, unsafe_allow_html=True)
+    st.markdown("### Security Note")
+    st.warning("""
+    **Important Safety Guidelines:**
+    - Never commit API keys to Git
+    - Use environment variables
+    - Rotate keys regularly
+    - Monitor API usage
+    """)
