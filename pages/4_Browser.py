@@ -13,8 +13,8 @@ st.set_page_config(
 inject_global_css()
 
 page_header(
-    "HTS Code Browser",
-    "Browse the complete HTS schedule page by page with detailed descriptions and metadata",
+    "Regulatory Schedule Browser",
+    "Comprehensive access to the complete 2026 HTS dataset. Explore legal headers, duty rates, and technical specifications page by page.",
     icon="📚"
 )
 
@@ -121,16 +121,11 @@ with st.sidebar:
     
     info = textwrap.dedent(f"""
         <div class="glass-card">
-            <p style="font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.8);">
-                The <strong>HTS Browser</strong> lets you browse all HTS codes sequentially, 
-                perfect for exploring the complete schedule.
-            </p>
-            <br>
-            <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.7);">
-                <li><strong>Total Codes:</strong> {total:,}</li>
-                <li><strong>Per Page:</strong> {page_size}</li>
-                <li><strong>Total Pages:</strong> {total_pages:,}</li>
-                <li><strong>Current Page:</strong> {page}</li>
+            <h4 style="color: var(--accent-blue); margin-bottom: 12px;">📈 Dataset Metrics</h4>
+            <ul style="font-size: 13px; line-height: 1.8; color: var(--accent-slate);">
+                <li><strong>Compliance Depth:</strong> Complete (2026)</li>
+                <li><strong>Total Declarations:</strong> {total:,}</li>
+                <li><strong>Current View:</strong> Page {page} of {total_pages:,}</li>
             </ul>
         </div>
     """).strip()

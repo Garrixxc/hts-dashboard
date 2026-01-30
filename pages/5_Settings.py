@@ -12,8 +12,8 @@ st.set_page_config(
 inject_global_css()
 
 page_header(
-    "Settings & Configuration",
-    "Environment status, API connections, and system configuration",
+    "Compliance Configuration",
+    "Manage environment variables, secure API gateways, and global system health metrics.",
     icon="⚙️"
 )
 

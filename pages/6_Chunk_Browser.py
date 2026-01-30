@@ -12,9 +12,9 @@ st.set_page_config(
 inject_global_css()
 
 page_header(
-    "Knowledge Chunk Browser",
-    "Explore the underlying HTS knowledge base. Search, filter, and view individual text chunks with metadata.",
-    icon="🔍"
+    "Knowledge Base Explorer",
+    "Advanced granular access to the vectorized HTS schedule. Monitor embedding health and text-to-vector alignment.",
+    icon="💾"
 )
 
 # Search and filter controls

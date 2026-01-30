@@ -14,20 +14,20 @@ st.set_page_config(
 inject_global_css()
 
 page_header(
-    "AI Classification Assistant",
-    "Describe your product and get instant HTS code suggestions with confidence scores and AI-powered explanations",
-    icon="🧠"
+    "Automated Classification AI",
+    "Apply deep semantic logic to complex product specifications. Receive instant HTS alignment with regulatory reasoning and confidence metrics.",
+    icon="🛡️"
 )
 
 # Example descriptions
 st.markdown('<h3 class="section-title" style="font-size: 20px; margin-top: 24px;">💡 Try an Example</h3>', unsafe_allow_html=True)
 
 examples = [
-    "A plastic bottle used for packaging drinking water, made of PET plastic with screw cap",
-    "Men's cotton short-sleeve t-shirt, knitted fabric, crew neck, casual wear",
-    "Stainless steel screws for furniture assembly, M6 size, Phillips head, corrosion resistant",
-    "Ceramic floor tiles, porcelain, glazed finish, 12x12 inches, for residential use",
-    "Electric motor, single-phase, 1 horsepower, 1800 RPM, for industrial machinery",
+    "Industrial grade PET packaging containers with integrated screw-top sealing mechanisms for high-pressure beverages.",
+    "Textile apparel: Men's knitted t-shirts, 100% cotton composition, crew neck construction, short-sleeve traditional fit.",
+    "Hardware: M6 Grade 304 stainless steel assembly screws, Phillips drive with low-profile countersunk head.",
+    "Construction: Glazed porcelain floor tiles, vitrified body, moisture absorption <0.5%, for high-traffic commercial use.",
+    "Industrial: Single-phase asynchronous electric motor, 750W (1.0 HP), NEMA standard frame for heavy-duty applications.",
 ]
 
 cols = st.columns(len(examples))

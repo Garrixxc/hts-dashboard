@@ -13,8 +13,8 @@ st.set_page_config(
 inject_global_css()
 
 page_header(
-    "Semantic HTS Search",
-    "Search 35,000+ HTS codes using natural language or code fragments. Powered by AI embeddings for intelligent matching.",
+    "Customs Intelligence Search",
+    "On-demand semantic access to the complete 35,571 record HTS database. Identify precise classifications through technical context matching.",
     icon="🔍"
 )
 
@@ -22,11 +22,11 @@ page_header(
 st.markdown('<h3 class="section-title" style="font-size: 20px; margin-top: 24px;">💡 Try These Examples</h3>', unsafe_allow_html=True)
 
 examples = [
-    ("live horses", "🐴"),
-    ("plastic water bottles", "🍾"),
-    ("electrical connectors", "🔌"),
-    ("cotton t-shirts", "👕"),
-    ("ceramic floor tiles", "🏠"),
+    ("Live purebred horses", "🐴"),
+    ("PET beverage containers", "🍾"),
+    ("Coaxial cable connectors", "🔌"),
+    ("Knitted cotton t-shirts", "👕"),
+    ("Glazed ceramic tiles", "🏠"),
 ]
 
 cols = st.columns(len(examples))
