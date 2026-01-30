@@ -1,20 +1,20 @@
-# utils/embeddings.py
-
-from openai import OpenAI
 import os
+from openai import OpenAI
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
-EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
-EMBEDDING_DIM = int(os.getenv("EMBEDDING_DIM", "1536"))
-
+EMBEDDING_MODEL = os.environ["EMBEDDING_MODEL"]
+EMBEDDING_DIM = int(os.environ["EMBEDDING_DIM"])
 
 def embed_text(text: str):
-    """
-    Generate a 1536-dim embedding from OpenAI.
-    """
-    resp = client.embeddings.create(
+    response = client.embeddings.create(
         model=EMBEDDING_MODEL,
         input=text
     )
-    return resp.data[0].embedding
+    vector = response.data[0].embedding
+
+    # safety check
+    if len(vector) != EMBEDDING_DIM:
+        raise ValueError(f"Embedding dimension mismatch: expected {EMBEDDING_DIM}, got {len(vector)}")
+
+    return vector

@@ -1,15 +1,27 @@
-from .embeddings import embed_text
-from .supabase_db import supabase
+import os
+from supabase import create_client
+from utils.embeddings import embed_text
+
+SUPABASE_URL = os.environ["SUPABASE_URL"]
+SUPABASE_SERVICE_ROLE_KEY = os.environ["SUPABASE_SERVICE_ROLE_KEY"]
+SUPABASE_TABLE = os.environ["SUPABASE_TABLE"]
+SUPABASE_MATCH_RPC = os.environ["SUPABASE_MATCH_RPC"]
+
+supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+
 
 def semantic_query(vector, limit=5):
-    return supabase.rpc(
-        "match_chunks",
+    response = supabase.rpc(
+        SUPABASE_MATCH_RPC,
         {
             "query_embedding": vector,
             "match_count": limit
         }
     ).execute()
 
-def semantic_search_hts(query: str, limit: int):
-    vector = embed_text(query)
-    return semantic_query(vector, limit)
+    return response.data
+
+
+def semantic_search_hts(query, limit=5):
+    vec = embed_text(query)
+    return semantic_query(vec, limit)
