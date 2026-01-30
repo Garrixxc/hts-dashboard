@@ -98,7 +98,7 @@ with col_a:
                 </div>
             </div>
             <div style="margin-bottom: 12px;">
-                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; color: var(--text-muted);">
+                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; color: var(--text-main);">
                     <span>Chapter 39: Plastics</span><span>15%</span>
                 </div>
                 <div style="width: 100%; height: 6px; background: #e2e8f0; border-radius: 10px;">
@@ -130,17 +130,17 @@ viz_content = textwrap.dedent("""
     </p>
     <br>
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px;">
-        <div style="padding: 16px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
-            <div style="font-size: 32px; color: var(--accent-primary);">📊</div>
+        <div style="padding: 16px; background: rgba(88, 166, 255, 0.05); border-radius: 12px; border: 1px solid var(--border-subtle);">
+            <div style="font-size: 32px; color: var(--primary);">📊</div>
             <p style="margin-top: 8px; font-size: 13px; color: var(--text-main);">Trends</p>
         </div>
-        <div style="padding: 16px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
-            <div style="font-size: 32px; color: var(--accent-secondary);">🎯</div>
+        <div style="padding: 16px; background: rgba(88, 166, 255, 0.05); border-radius: 12px; border: 1px solid var(--border-subtle);">
+            <div style="font-size: 32px; color: var(--secondary);">🎯</div>
             <p style="margin-top: 8px; font-size: 13px; color: var(--text-main);">Accuracy</p>
         </div>
-        <div style="padding: 16px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
-            <div style="font-size: 32px; color: var(--accent-vibrant);">⚡</div>
-            <p style="margin-top: 8px; font-size: 13px; color: var(--text-main);">Response</p>
+        <div style="padding: 16px; background: rgba(88, 166, 255, 0.05); border-radius: 12px; border: 1px solid var(--border-subtle);">
+            <div style="font-size: 32px; color: #bc8cff;">🧠</div>
+            <p style="margin-top: 8px; font-size: 13px; color: var(--text-main);">AI Flow</p>
         </div>
     </div>
 </div>

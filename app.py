@@ -11,7 +11,7 @@ st.set_page_config(
 inject_global_css()
 
 # Hero Section
-st.markdown('<div class="gradient-bg" style="padding: 60px 0; margin: -20px -20px 40px -20px; border-radius: 20px;">', unsafe_allow_html=True)
+st.markdown('<div class="gradient-bg" style="padding: 60px 0; margin: -20px -20px 40px -20px; border-radius: 20px; border-bottom: 2px solid var(--primary);">', unsafe_allow_html=True)
 page_header(
     "Customs Intelligence Platform",
     "On-demand HTS alignment leveraging deep semantic architecture and industrial AI"
@@ -21,11 +21,11 @@ st.markdown('</div>', unsafe_allow_html=True)
 # Value Propositions
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.markdown('<div class="glass-card" style="text-align: center; border-top: 4px solid var(--primary);"><h3>Mitigate Risk</h3><p style="color: var(--slate-600); font-size: 14px;">Eliminate customs penalties with precise, AI-validated classification logic.</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="glass-card" style="text-align: center; border-top: 4px solid var(--primary);"><h3>Mitigate Risk</h3><p style="color: var(--text-muted); font-size: 14px;">Eliminate customs penalties with precise, AI-validated classification logic.</p></div>', unsafe_allow_html=True)
 with col2:
-    st.markdown('<div class="glass-card" style="text-align: center; border-top: 4px solid var(--slate-700);"><h3>Accelerate Entry</h3><p style="color: var(--slate-600); font-size: 14px;">Reduce time-to-market with automated regulatory alignment and duty mapping.</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="glass-card" style="text-align: center; border-top: 4px solid var(--secondary);"><h3>Accelerate Entry</h3><p style="color: var(--text-muted); font-size: 14px;">Reduce time-to-market with automated regulatory alignment and duty mapping.</p></div>', unsafe_allow_html=True)
 with col3:
-    st.markdown('<div class="glass-card" style="text-align: center; border-top: 4px solid var(--primary-dark);"><h3>Scale Intelligence</h3><p style="color: var(--slate-600); font-size: 14px;">Deploy consistent trade compliance logic across global logistics networks.</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="glass-card" style="text-align: center; border-top: 4px solid var(--accent-purple);"><h3>Scale Intelligence</h3><p style="color: var(--text-muted); font-size: 14px;">Deploy consistent trade compliance logic across global logistics networks.</p></div>', unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -50,7 +50,7 @@ st.markdown('<h2 class="section-title">Search & Classification Engine</h2>', uns
 guide_content = textwrap.dedent("""
     <div style="padding: 12px;">
         <div style="margin-bottom: 24px;">
-            <h4 style="color: var(--accent-primary); margin-bottom: 8px;">1. Professional Semantic Lookup</h4>
+            <h4 style="color: var(--primary); margin-bottom: 8px;">Professional Semantic Lookup</h4>
             <p style="color: var(--text-muted); line-height: 1.6;">
                 Use <strong>Customs Intelligence Search</strong> for technical queries. 
                 Our engine understands industrial terminology like "asynchronous motor" or "PET polymer".
@@ -58,14 +58,14 @@ guide_content = textwrap.dedent("""
         </div>
         
         <div style="margin-bottom: 24px;">
-            <h4 style="color: var(--accent-primary); margin-bottom: 8px;">2. Automated Classification Analysis</h4>
+            <h4 style="color: var(--primary); margin-bottom: 8px;">Automated Classification Analysis</h4>
             <p style="color: var(--text-muted); line-height: 1.6;">
                 Input full product specifications into the <strong>Classification Assistant</strong> 
                 to receive instant HTS alignment with regulatory reasoning.
             </p>
         </div>
         
-        <div style="margin-top: 24px; padding: 16px; background: rgba(99, 102, 241, 0.05); border-left: 4px solid var(--primary); border-radius: 8px;">
+        <div style="margin-top: 24px; padding: 16px; background: rgba(88, 166, 255, 0.05); border-left: 4px solid var(--primary); border-radius: 8px;">
             <strong style="color: var(--primary);">💡 Intelligence Tip:</strong>
             <p style="margin: 8px 0 0 0; color: var(--text-main);">
                 For optimal results, provide material composition and intended industrial application. 
@@ -85,13 +85,13 @@ col1, col2 = st.columns([1, 1])
 with col1:
     features = textwrap.dedent("""
     <div style="padding: 20px;">
-        <h3 style="color: var(--accent-primary); margin-bottom: 16px;">✨ Platform Capabilities</h3>
+        <h3 style="color: var(--primary); margin-bottom: 16px;">Platform Capabilities</h3>
         <ul style="color: var(--text-muted); line-height: 2;">
             <li><strong>AI-Powered:</strong> OpenAI embeddings for semantic understanding</li>
             <li><strong>Fast:</strong> Sub-second response times for complex queries</li>
             <li><strong>Accurate:</strong> Advanced HTS code alignment logic</li>
             <li><strong>Comprehensive:</strong> Full 2026 HTS database coverage</li>
-            <li><strong>Explainable:</strong> Detailed regulatory reasoning for each match</li>
+            <li><strong>Explainable:</strong> Detailed regulatory reasoning</li>
         </ul>
     </div>
     """).strip()
@@ -100,13 +100,13 @@ with col1:
 with col2:
     best_practices = textwrap.dedent("""
     <div style="padding: 20px;">
-        <h3 style="color: var(--accent-secondary); margin-bottom: 16px;">🎯 Best Practices</h3>
+        <h3 style="color: var(--secondary); margin-bottom: 16px;">Best Practices</h3>
         <ul style="color: var(--text-muted); line-height: 2;">
             <li>Start with natural product descriptions</li>
             <li>Include material composition and final use</li>
             <li>Specify industrial or retail packaging</li>
-            <li>Check confidence scores for compliance audits</li>
-            <li>Explore the HTS hierarchy for legal context</li>
+            <li>Check confidence scores for compliance</li>
+            <li>Explore the HTS hierarchy for context</li>
         </ul>
     </div>
     """).strip()

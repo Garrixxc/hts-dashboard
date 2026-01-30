@@ -168,8 +168,8 @@ with st.sidebar:
     st.markdown(
         textwrap.dedent("""
         <div class="glass-card">
-            <h4 style="color: var(--accent-primary); margin-bottom: 12px;">How Search Works:</h4>
-            <p style="font-size: 14px; line-height: 1.6; color: var(--text-muted);">
+            <h4 style="color: var(--primary); margin-bottom: 12px;">How Search Works:</h4>
+            <p style="font-size: 14px; line-height: 1.6; color: var(--text-main);">
                 Our AI understands <strong>context and meaning</strong>, not just keywords. 
                 It can match synonyms, technical terms, and related concepts.
             </p>
@@ -184,7 +184,7 @@ with st.sidebar:
         textwrap.dedent("""
         <div class="glass-card">
             <h4 style="color: var(--secondary); margin-bottom: 12px;">Search Strategies:</h4>
-            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-muted);">
+            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-main);">
                 <li><strong>Broad terms</strong> for exploration</li>
                 <li><strong>Specific materials</strong> for precision</li>
                 <li><strong>Use cases</strong> to find applications</li>
@@ -202,8 +202,8 @@ with st.sidebar:
     st.markdown(
         textwrap.dedent("""
         <div class="glass-card">
-            <h4 style="color: var(--vibrant-green); margin-bottom: 12px;">Database Stats:</h4>
-            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-muted);">
+            <h4 style="color: #3fb950; margin-bottom: 12px;">Database Stats:</h4>
+            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-main);">
                 <li>📚 35,000+ HTS codes</li>
                 <li>🔍 Semantic search enabled</li>
                 <li>⚡ Sub-2s response time</li>

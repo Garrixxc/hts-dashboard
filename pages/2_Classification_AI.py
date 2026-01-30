@@ -193,8 +193,8 @@ if classify_button:
                     if st.session_state[explain_key]:
                         explanation_html = textwrap.dedent(f'''
                         <div class="glass-card" style="margin-top: 16px; margin-bottom: 24px; border-left: 4px solid var(--primary);">
-                            <h4 style="color: var(--slate-900); margin-bottom: 12px; font-weight: 700;">AI Reasoning</h4>
-                            <div style="font-size: 14px; line-height: 1.6; color: var(--slate-700);">
+                            <h4 style="color: var(--primary); margin-bottom: 12px; font-weight: 700;">AI Reasoning</h4>
+                            <div style="font-size: 14px; line-height: 1.6; color: var(--text-main);">
                                 {st.session_state[explain_key]}
                             </div>
                         </div>
@@ -227,7 +227,7 @@ with st.sidebar:
         textwrap.dedent("""
         <div class="glass-card">
             <h4 style="color: var(--primary); margin-bottom: 12px;">For Best Results:</h4>
-            <ul style="font-size: 14px; line-height: 1.8; color: var(--text-muted);">
+            <ul style="font-size: 14px; line-height: 1.8; color: var(--text-main);">
                 <li><strong>Be specific</strong> about materials</li>
                 <li><strong>Describe</strong> the primary use</li>
                 <li><strong>Include</strong> technical specs</li>
@@ -244,12 +244,12 @@ with st.sidebar:
     st.markdown(
         textwrap.dedent("""
         <div class="glass-card">
-            <h4 style="color: var(--accent-primary); margin-bottom: 12px;">Understanding Scores:</h4>
-            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-muted);">
-                <li><span style="color: var(--success); font-weight: 700;">90%+</span> Excellent match</li>
-                <li><span style="color: var(--info); font-weight: 700;">75-89%</span> Good match</li>
-                <li><span style="color: var(--warning); font-weight: 700;">60-74%</span> Fair match</li>
-                <li><span style="color: var(--error); font-weight: 700;">&lt;60%</span> Weak match</li>
+            <h4 style="color: var(--secondary); margin-bottom: 12px;">Understanding Scores:</h4>
+            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-main);">
+                <li><span style="color: #3fb950; font-weight: 700;">90%+</span> Excellent match</li>
+                <li><span style="color: var(--primary); font-weight: 700;">75-89%</span> Good match</li>
+                <li><span style="color: var(--secondary); font-weight: 700;">60-74%</span> Fair match</li>
+                <li><span style="color: #f85149; font-weight: 700;">&lt;60%</span> Weak match</li>
             </ul>
         </div>
         """),

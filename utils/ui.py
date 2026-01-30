@@ -18,60 +18,32 @@ def inject_global_css() -> None:
             /* CSS VARIABLES - Design Tokens */
             /* ============================================================================ */
             :root {
-                /* Enterprise Professional Palette */
-                --primary: #2563eb;          /* Blue-600 */
-                --primary-dark: #1e40af;     /* Blue-800 */
-                --slate-900: #0f172a;
-                --slate-800: #1e293b;
-                --slate-700: #334155;
-                --slate-600: #475569;
-                --slate-500: #64748b;
-                --slate-100: #f1f5f9;
-                --slate-50: #f8fafc;
+                /* Original Dark Industrial Palette */
+                --primary: #58a6ff;          /* GitHub Blue */
+                --secondary: #f0883e;        /* Amber */
+                --accent-blue: #58a6ff;
+                --accent-amber: #f0883e;
+                --accent-purple: #bc8cff;
+                --accent-green: #3fb950;
                 
-                /* Layout Backgrounds */
-                --bg-main: #ffffff;
-                --bg-sidebar: #0f172a;       /* Slate-900 (High Contrast) */
-                --bg-card: #ffffff;
-                --bg-secondary: #f8fafc;
+                /* Layout Backgrounds - Dark & Premium */
+                --bg-main: #0d1117;          /* Deep Charcoal */
+                --bg-sidebar: #010409;       /* Near Black */
+                --bg-card: rgba(22, 27, 34, 0.7);
+                --bg-glass: rgba(13, 17, 23, 0.8);
                 
-                /* Typography */
-                --text-main: #1e293b;        /* Slate-800 */
-                --text-muted: #64748b;       /* Slate-500 */
-                --text-sidebar: #f8fafc;     /* Slate-50 */
+                /* Typography - Pure Contrast */
+                --text-main: #f0f6fc;        /* Off White */
+                --text-muted: #8b949e;       /* Gray-400 */
+                --text-sidebar: #f0f6fc;
                 
                 /* Borders & Shadows */
-                --border-light: #e2e8f0;
-                --shadow-soft: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-                --shadow-premium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-
-                /* ALIASES */
-                --accent-primary: var(--primary);
-                --accent-secondary: var(--slate-700);
-                --accent-vibrant: #10b981;
-                --success: #059669;
-                --warning: #d97706;
-                --error: #dc2626;
-                --info: #0284c7;
-                
-                --bg-dark: var(--bg-main);
-                --bg-card: white;
-                --bg-glass: rgba(255, 255, 255, 0.9);
-                --bg-glass-hover: #f1f5f9;
-                
-                --border-subtle: var(--border-light);
-                --border-medium: #cbd5e1;
-                
-                --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-                --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-                --shadow-premium: var(--shadow-vibrant);
-                
-                --font-heading: 'Inter', sans-serif;
-                --font-body: 'Inter', sans-serif;
+                --border-subtle: rgba(48, 54, 61, 0.8);
+                --border-bright: rgba(88, 166, 255, 0.3);
+                --shadow-premium: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
             }
             
-            /* High-Level Streamlit Theme Injection */
+            /* Global Streamlit Dark Override */
             [data-testid="stAppViewContainer"] {
                 background-color: var(--bg-main) !important;
                 color: var(--text-main) !important;
@@ -79,15 +51,14 @@ def inject_global_css() -> None:
             
             [data-testid="stSidebar"] {
                 background-color: var(--bg-sidebar) !important;
-                border-right: none !important;
-                box-shadow: 10px 0 15px -3px rgba(0, 0, 0, 0.1) !important;
+                border-right: 1px solid var(--border-subtle) !important;
             }
 
             [data-testid="stHeader"] {
                 background-color: transparent !important;
             }
 
-            /* FIX SIDEBAR ICON & TEXT VISIBILITY */
+            /* FIX SIDEBAR VISIBILITY */
             [data-testid="stSidebar"] [data-testid="stVerticalBlock"] {
                 padding-top: 2rem;
             }
@@ -100,29 +71,28 @@ def inject_global_css() -> None:
                 color: var(--text-sidebar) !important;
             }
             
-            /* Make Nav Icons Pop */
             [data-testid="stSidebar"] .st-emotion-cache-6qob1r svg,
             [data-testid="stSidebar"] .st-emotion-cache-1v07afm svg {
                 color: var(--primary) !important;
-                filter: drop-shadow(0 0 5px rgba(37, 99, 235, 0.4));
+                filter: drop-shadow(0 0 8px rgba(88, 166, 255, 0.5)) !important;
             }
 
-            /* Global Typography - Clean Industrial */
+            /* Global Typography */
             h1, h2, h3, h4, .hero-title, .section-title {
-                color: var(--slate-900) !important;
-                font-family: 'Inter', -apple-system, sans-serif !important;
+                color: var(--text-main) !important;
+                font-family: 'Inter', sans-serif !important;
                 font-weight: 700 !important;
                 letter-spacing: -0.01em !important;
             }
             
-            p, li, label, .stMarkdown {
-                color: var(--slate-700) !important;
+            p, li, label, span, .stMarkdown {
+                color: var(--text-main) !important;
                 font-family: 'Inter', sans-serif !important;
                 line-height: 1.6;
             }
 
             /* ============================================================================ */
-            /* WIDGET STYLING - FIXING READABILITY */
+            /* WIDGET STYLING - CRISP DARK */
             /* ============================================================================ */
             
             /* Standard Buttons */
@@ -176,29 +146,27 @@ def inject_global_css() -> None:
             /* ============================================================================ */
             
             .glass-card {
-                background: white;
-                border: 1px solid var(--border-light);
+                background: #161b22;
+                border: 1px solid var(--border-subtle);
                 border-radius: 12px;
                 padding: 24px;
                 margin-bottom: 20px;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
                 transition: all 0.3s ease;
             }
             
             .glass-card:hover {
-                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
                 border-color: var(--primary);
                 transform: translateY(-2px);
             }
             
             .glass-card-premium {
-                background: white;
-                border: 1px solid var(--border-light);
+                background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+                border: 1px solid var(--border-bright);
                 border-radius: 16px;
                 padding: 28px;
                 margin-bottom: 24px;
-                box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.1);
-                border-top: 4px solid var(--primary);
+                box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
             }
             
             /* Section Headers with Vibrant Underline */
