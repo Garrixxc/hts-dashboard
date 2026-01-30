@@ -34,7 +34,7 @@ if st.button("✨ Classify"):
 
         results = classify_hts(desc, k)
 
-        for r in results:
+        for r in results or []:
             st.markdown(
                 f"""
                 <div style="padding:18px;border-radius:10px;background:#1b263b;margin-bottom:14px;border:1px solid #2b3b55;">

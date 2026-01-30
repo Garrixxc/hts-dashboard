@@ -8,8 +8,11 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
 EMBEDDING_DIM = int(os.getenv("EMBEDDING_DIM", "1536"))
 
+
 def embed_text(text: str):
-    """Return 1536-dim embedding using OpenAI text-embedding-3-small."""
+    """
+    Generate a 1536-dim embedding from OpenAI.
+    """
     resp = client.embeddings.create(
         model=EMBEDDING_MODEL,
         input=text

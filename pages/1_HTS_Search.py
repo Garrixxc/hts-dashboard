@@ -35,7 +35,7 @@ if st.button("🔎 Search"):
 
         results = semantic_search_hts(query, k)
 
-        for r in results:
+        for r in results or []:
             st.markdown(
                 f"""
                 <div style="padding:18px;border-radius:10px;background:#20232a;margin-bottom:14px;border:1px solid #333;">
