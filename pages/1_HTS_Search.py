@@ -183,8 +183,8 @@ with st.sidebar:
     st.markdown(
         textwrap.dedent("""
         <div class="glass-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 12px;">Search Strategies:</h4>
-            <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
+            <h4 style="color: var(--secondary); margin-bottom: 12px;">Search Strategies:</h4>
+            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-muted);">
                 <li><strong>Broad terms</strong> for exploration</li>
                 <li><strong>Specific materials</strong> for precision</li>
                 <li><strong>Use cases</strong> to find applications</li>
@@ -202,8 +202,8 @@ with st.sidebar:
     st.markdown(
         textwrap.dedent("""
         <div class="glass-card">
-            <h4 style="color: var(--accent-pink); margin-bottom: 12px;">Database Stats:</h4>
-            <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
+            <h4 style="color: var(--vibrant-green); margin-bottom: 12px;">Database Stats:</h4>
+            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-muted);">
                 <li>📚 35,000+ HTS codes</li>
                 <li>🔍 Semantic search enabled</li>
                 <li>⚡ Sub-2s response time</li>

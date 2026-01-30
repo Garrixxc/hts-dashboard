@@ -156,7 +156,7 @@ if classify_button:
                     </div>
                     {similarity_html}
                     <details style="margin-top: 16px;">
-                        <summary style="cursor: pointer; color: rgba(255, 255, 255, 0.7); font-size: 14px;">
+                        <summary style="cursor: pointer; color: var(--text-muted); font-size: 14px;">
                             Show full description
                         </summary>
                         <div class="hts-description">{r.get('normalized_text', 'No additional details available')}</div>
@@ -194,8 +194,8 @@ if classify_button:
                     if st.session_state[explain_key]:
                         explanation_html = textwrap.dedent(f'''
                         <div class="glass-card" style="margin-top: 16px; margin-bottom: 24px;">
-                            <h4 style="color: var(--accent-blue); margin-bottom: 12px;">🤖 AI Explanation</h4>
-                            <div style="font-size: 14px; line-height: 1.6;">
+                            <h4 style="color: var(--primary); margin-bottom: 12px;">🤖 AI Explanation</h4>
+                            <div style="font-size: 14px; line-height: 1.6; color: var(--text-main);">
                                 {st.session_state[explain_key]}
                             </div>
                         </div>
@@ -227,8 +227,8 @@ with st.sidebar:
     st.markdown(
         textwrap.dedent("""
         <div class="glass-card">
-            <h4 style="color: var(--accent-blue); margin-bottom: 12px;">For Best Results:</h4>
-            <ul style="font-size: 14px; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
+            <h4 style="color: var(--primary); margin-bottom: 12px;">For Best Results:</h4>
+            <ul style="font-size: 14px; line-height: 1.8; color: var(--text-muted);">
                 <li><strong>Be specific</strong> about materials</li>
                 <li><strong>Describe</strong> the primary use</li>
                 <li><strong>Include</strong> technical specs</li>

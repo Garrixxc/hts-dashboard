@@ -66,8 +66,8 @@ guide_content = textwrap.dedent("""
             </p>
         </div>
         
-        <div style="margin-top: 24px; padding: 16px; background: rgba(79, 70, 229, 0.05); border-left: 4px solid var(--accent-primary); border-radius: 8px;">
-            <strong style="color: var(--accent-primary);">💡 Intelligence Tip:</strong>
+        <div style="margin-top: 24px; padding: 16px; background: rgba(99, 102, 241, 0.05); border-left: 4px solid var(--primary); border-radius: 8px;">
+            <strong style="color: var(--primary);">💡 Intelligence Tip:</strong>
             <p style="margin: 8px 0 0 0; color: var(--text-main);">
                 For optimal results, provide material composition and intended industrial application. 
                 The AI scales best when given high-resolution technical data.

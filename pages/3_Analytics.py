@@ -117,7 +117,7 @@ with col_b:
                 System maintains high alignment stability across core industrial categories. No significant drift detected in last 30 business cycles.
             </p>
             <div style="margin-top: 16px; padding: 12px; background: rgba(16, 185, 129, 0.05); border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.2);">
-                <span style="color: var(--success); font-weight: 600; font-size: 13px;">✓ Analysis Status: Optimal</span>
+                <span style="color: var(--vibrant-green); font-weight: 600; font-size: 13px;">✓ Analysis Status: Optimal</span>
             </div>
         </div>
     """).strip()

@@ -18,137 +18,180 @@ def inject_global_css() -> None:
             /* CSS VARIABLES - Design Tokens */
             /* ============================================================================ */
             :root {
-                /* Primary Colors - Vibrant & Bright */
-                --accent-primary: #4f46e5;    /* Indigo-600 */
-                --accent-secondary: #f59e0b;  /* Amber-500 */
-                --accent-vibrant: #10b981;    /* Emerald-500 */
-                --accent-stone: #64748b;      /* Slate-500 */
+                /* Primary Theme Colors - Hyper Vibrant */
+                --primary: #6366f1;          /* Indigo-500 */
+                --primary-vibrant: #4f46e5;  /* Indigo-600 */
+                --secondary: #f59e0b;        /* Amber-500 */
+                --vibrant-green: #10b981;    /* Emerald-500 */
+                --vibrant-rose: #f43f5e;     /* Rose-500 */
                 
-                /* Semantic Colors */
-                --success: #059669;          /* Emerald-600 */
-                --warning: #d97706;          /* Amber-600 */
-                --error: #dc2626;            /* Red-600 */
-                --info: #2563eb;             /* Blue-600 */
+                /* Layout Backgrounds */
+                --bg-main: #ffffff;
+                --bg-sidebar: #f8fafc;       /* Slate-50 */
+                --bg-card: #ffffff;
+                --bg-secondary: #f1f5f9;     /* Slate-100 */
                 
-                /* Backgrounds - Crisp Light */
-                --bg-main: #f8fafc;          /* Slate-50 */
-                --bg-card: #ffffff;          /* Pure White */
+                /* Typography */
+                --text-main: #1e293b;        /* Slate-800 */
+                --text-muted: #64748b;       /* Slate-500 */
+                --text-on-vibrant: #ffffff;
+                
+                /* Borders & Shadows */
+                --border-light: #e2e8f0;
+                --shadow-vibrant: 0 10px 15px -3px rgba(99, 102, 241, 0.1);
+
+                /* LEGACY ALIASES - Support for old variable names */
+                --accent-primary: var(--primary);
+                --accent-secondary: var(--secondary);
+                --accent-vibrant: var(--vibrant-green);
+                --accent-blue: var(--primary);
+                --accent-purple: var(--primary-vibrant);
+                --accent-amber: var(--secondary);
+                --accent-orange: #f97316;    /* Orange-500 */
+                --accent-gold: #f59e0b;
+                --accent-stone: var(--text-muted);
+                
+                --success: var(--vibrant-green);
+                --warning: var(--secondary);
+                --error: var(--vibrant-rose);
+                --info: #0ea5e9;             /* Sky-500 */
+                
+                --bg-dark: var(--bg-main);
+                --bg-card: white;
                 --bg-glass: rgba(255, 255, 255, 0.9);
-                --bg-glass-hover: #ffffff;
+                --bg-glass-hover: #f1f5f9;
                 
-                /* Borders */
-                --border-subtle: #e2e8f0;    /* Slate-200 */
-                --border-medium: #cbd5e1;    /* Slate-300 */
+                --border-subtle: var(--border-light);
+                --border-medium: #cbd5e1;
                 
-                /* Shadows - Soft & Clean */
-                --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-                --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-                --shadow-premium: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+                --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+                --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                --shadow-premium: var(--shadow-vibrant);
                 
-                /* Typography - Dark Contrast */
-                --font-heading: 'Inter', -apple-system, sans-serif;
-                --font-body: 'Inter', -apple-system, sans-serif;
-                --text-main: #0f172a;        /* Slate-900 */
-                --text-muted: #475569;      /* Slate-600 */
+                --font-heading: 'Inter', sans-serif;
+                --font-body: 'Inter', sans-serif;
             }
             
-            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-            /* Global Streamlit Reset to Light */
-            .main, .stApp {
+            /* High-Level Streamlit Theme Injection */
+            [data-testid="stAppViewContainer"] {
                 background-color: var(--bg-main) !important;
                 color: var(--text-main) !important;
             }
             
-            .stMarkdown, .stText, p, span, li, label {
+            [data-testid="stSidebar"] {
+                background-color: var(--bg-sidebar) !important;
+                border-right: 1px solid var(--border-light) !important;
+            }
+
+            [data-testid="stHeader"] {
+                background-color: rgba(255, 255, 255, 0.8) !important;
+                backdrop-filter: blur(10px);
+            }
+
+            /* Fix Sidebar Text & Icons */
+            [data-testid="stSidebar"] * {
                 color: var(--text-main) !important;
             }
 
-            .main {
-                background-color: var(--bg-main);
-                background-image: 
-                    radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.05) 0, transparent 50%), 
-                    radial-gradient(at 50% 0%, rgba(245, 158, 11, 0.03) 0, transparent 50%);
+            /* Global Typography Fixes */
+            h1, h2, h3, h4, h5, h6, p, li, label, .stMarkdown {
+                color: var(--text-main) !important;
+                font-family: 'Inter', sans-serif !important;
             }
-            
-            .gradient-bg {
-                background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-                border: 1px solid var(--border-subtle);
-                border-top: 2px solid var(--accent-primary);
-            }
-            
+
             /* ============================================================================ */
-            /* GLASSMORPHISM COMPONENTS (Now Light Mode) */
+            /* WIDGET STYLING - FIXING READABILITY */
+            /* ============================================================================ */
+            
+            /* Standard Buttons */
+            .stButton > button {
+                background: var(--bg-secondary) !important;
+                color: var(--text-main) !important;
+                border: 1px solid var(--border-light) !important;
+                border-radius: 8px !important;
+                font-weight: 500 !important;
+                transition: all 0.2s ease !important;
+            }
+            
+            .stButton > button:hover {
+                border-color: var(--primary) !important;
+                color: var(--primary) !important;
+                transform: translateY(-1px);
+                box-shadow: var(--shadow-vibrant);
+            }
+
+            /* Primary/Action Buttons */
+            div[data-testid="stFormSubmitButton"] button, 
+            .btn-primary {
+                background: linear-gradient(135deg, var(--primary), var(--primary-vibrant)) !important;
+                color: white !important;
+                border: none !important;
+                box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4) !important;
+            }
+            
+            /* Text Inputs & Areas */
+            .stTextInput input, .stTextArea textarea {
+                background-color: var(--bg-secondary) !important;
+                color: var(--text-main) !important;
+                border: 1px solid var(--border-light) !important;
+                border-radius: 8px !important;
+            }
+
+            .stTextInput input:focus, .stTextArea textarea:focus {
+                border-color: var(--primary) !important;
+                box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2) !important;
+            }
+
+            /* ============================================================================ */
+            /* GLASSMORPHISM COMPONENTS */
             /* ============================================================================ */
             
             .glass-card {
-                background: var(--bg-card);
-                border: 1px solid var(--border-subtle);
+                background: white;
+                border: 1px solid var(--border-light);
                 border-radius: 12px;
                 padding: 24px;
-                margin-bottom: 16px;
-                box-shadow: var(--shadow-md);
-                transition: all 0.2s ease-in-out;
+                margin-bottom: 20px;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+                transition: all 0.3s ease;
             }
             
             .glass-card:hover {
-                border-color: var(--accent-primary);
-                box-shadow: var(--shadow-lg);
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+                border-color: var(--primary);
                 transform: translateY(-2px);
             }
             
             .glass-card-premium {
-                background: var(--bg-card);
-                border: 1px solid var(--border-subtle);
+                background: white;
+                border: 1px solid var(--border-light);
                 border-radius: 16px;
                 padding: 28px;
-                margin-bottom: 20px;
-                box-shadow: var(--shadow-premium);
-                position: relative;
-                overflow: hidden;
+                margin-bottom: 24px;
+                box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.1);
+                border-top: 4px solid var(--primary);
             }
             
-            .glass-card-premium::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: 4px;
-                background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-            }
-            
-            /* ============================================================================ */
-            /* TYPOGRAPHY */
-            /* ============================================================================ */
-            
-            .hero-title {
-                font-family: var(--font-heading);
-                font-size: 48px;
+            /* Section Headers with Vibrant Underline */
+            .section-title {
+                font-size: 24px;
                 font-weight: 800;
                 color: var(--text-main);
-                margin-bottom: 12px;
-                letter-spacing: -0.02em;
+                margin-bottom: 20px;
+                position: relative;
+                padding-bottom: 8px;
             }
             
-            .section-title {
-                font-family: var(--font-heading);
-                font-size: 24px;
-                font-weight: 700;
-                color: var(--text-main);
-                margin-bottom: 16px;
-                display: flex;
-                align-items: center;
-                gap: 12px;
-            }
-            
-            .subtitle {
-                font-size: 18px;
-                color: var(--text-muted);
-                margin-bottom: 32px;
-                line-height: 1.6;
-                font-weight: 400;
+            .section-title::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 40px;
+                height: 4px;
+                background: var(--primary);
+                border-radius: 2px;
             }
             
             /* ============================================================================ */
@@ -223,44 +266,44 @@ def inject_global_css() -> None:
             }
             
             .confidence-high {
-                background: rgba(6, 255, 165, 0.2);
-                color: var(--success);
-                border: 1px solid rgba(6, 255, 165, 0.4);
+                background: rgba(16, 185, 129, 0.1);
+                color: #059669;
+                border: 1px solid rgba(16, 185, 129, 0.2);
             }
             
             .confidence-medium {
-                background: rgba(76, 201, 240, 0.2);
-                color: var(--info);
-                border: 1px solid rgba(76, 201, 240, 0.4);
+                background: rgba(99, 102, 241, 0.1);
+                color: #4f46e5;
+                border: 1px solid rgba(99, 102, 241, 0.2);
             }
             
             .confidence-low {
-                background: rgba(255, 214, 10, 0.2);
-                color: var(--warning);
-                border: 1px solid rgba(255, 214, 10, 0.4);
+                background: rgba(245, 158, 11, 0.1);
+                color: #d97706;
+                border: 1px solid rgba(245, 158, 11, 0.2);
             }
             
             .confidence-very-low {
-                background: rgba(239, 71, 111, 0.2);
-                color: var(--error);
-                border: 1px solid rgba(239, 71, 111, 0.4);
+                background: rgba(244, 63, 94, 0.1);
+                color: #e11d48;
+                border: 1px solid rgba(244, 63, 94, 0.2);
             }
             
             /* Progress bar for similarity */
             .similarity-bar {
                 width: 100%;
-                height: 6px;
-                background: rgba(255, 255, 255, 0.1);
+                height: 8px;
+                background: var(--bg-secondary);
                 border-radius: 999px;
                 overflow: hidden;
-                margin-top: 8px;
+                margin-top: 12px;
             }
             
             .similarity-fill {
                 height: 100%;
                 border-radius: 999px;
                 transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-                background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+                background: linear-gradient(90deg, var(--primary), var(--vibrant-green));
             }
             
             /* ============================================================================ */
@@ -268,7 +311,7 @@ def inject_global_css() -> None:
             /* ============================================================================ */
             
             .btn-primary {
-                background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+                background: linear-gradient(135deg, var(--primary), var(--primary-vibrant));
                 color: white;
                 padding: 10px 20px;
                 border-radius: 8px;
@@ -276,31 +319,29 @@ def inject_global_css() -> None:
                 font-weight: 600;
                 cursor: pointer;
                 transition: all 0.2s ease;
-                box-shadow: var(--shadow-sm);
+                box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.3);
             }
             
             .btn-primary:hover {
-                filter: brightness(1.1);
                 transform: translateY(-1px);
-                box-shadow: var(--shadow-md);
+                box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4);
             }
             
             .btn-secondary {
-                background: var(--bg-glass);
-                backdrop-filter: blur(10px);
-                color: white;
-                padding: 12px 24px;
-                border-radius: 12px;
-                border: 1px solid var(--border-subtle);
+                background: white;
+                color: var(--text-main);
+                padding: 10px 20px;
+                border-radius: 8px;
+                border: 1px solid var(--border-light);
                 font-weight: 600;
                 cursor: pointer;
-                transition: all 0.3s ease;
+                transition: all 0.2s ease;
             }
             
             .btn-secondary:hover {
-                background: var(--bg-glass-hover);
-                border-color: var(--border-medium);
-                transform: translateY(-2px);
+                border-color: var(--primary);
+                color: var(--primary);
+                transform: translateY(-1px);
             }
             
             /* ============================================================================ */
@@ -346,47 +387,48 @@ def inject_global_css() -> None:
             /* ============================================================================ */
             
             .result-card {
-                background: var(--bg-card);
-                border: 1px solid var(--border-subtle);
-                border-top: 1px solid var(--border-medium);
+                background: white;
+                border: 1px solid var(--border-light);
                 border-radius: 12px;
-                padding: 20px;
-                margin-bottom: 16px;
-                transition: all 0.2s ease-in-out;
+                padding: 24px;
+                margin-bottom: 20px;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+                transition: all 0.2s ease;
             }
             
             .result-card:hover {
-                border-color: var(--accent-primary);
+                border-color: var(--primary);
                 transform: translateY(-2px);
-                box-shadow: var(--shadow-lg);
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
             }
             
             .result-header {
                 display: flex;
                 justify-content: space-between;
                 align-items: flex-start;
-                margin-bottom: 12px;
+                margin-bottom: 16px;
             }
             
             .hts-code {
-                font-size: 24px;
-                font-weight: 700;
-                color: var(--accent-blue);
-                font-family: var(--font-mono);
+                font-size: 26px;
+                font-weight: 800;
+                color: var(--primary);
+                letter-spacing: -0.02em;
             }
             
             .hts-title {
-                font-size: 16px;
-                color: rgba(255, 255, 255, 0.9);
-                margin: 8px 0;
-                line-height: 1.5;
+                font-size: 18px;
+                font-weight: 600;
+                color: var(--text-main);
+                margin: 4px 0 12px 0;
+                line-height: 1.4;
             }
             
             .hts-description {
                 font-size: 14px;
-                color: rgba(255, 255, 255, 0.6);
+                color: var(--text-muted);
                 line-height: 1.6;
-                margin-top: 12px;
+                margin-top: 16px;
             }
             
             /* ============================================================================ */
@@ -594,7 +636,7 @@ def metric_card(label: str, value: str, icon: str = "📊") -> None:
     content = textwrap.dedent(f"""
         <div style="text-align: center;">
             <div style="font-size: 36px; margin-bottom: 8px;">{icon}</div>
-            <div style="font-size: 32px; font-weight: 700; color: var(--accent-primary); margin-bottom: 4px;">
+            <div style="font-size: 32px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">
                 {value}
             </div>
             <div style="font-size: 14px; color: var(--text-muted);">
