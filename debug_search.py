@@ -11,8 +11,9 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 client = OpenAI(api_key=OPENAI_API_KEY)
 
-def run_test_search():
-    query = "live horses"
+import sys
+
+def run_test_search(query="live horses"):
     print(f"🔍 Testing semantic search for: '{query}'")
     
     # 1. Embed text
@@ -28,30 +29,32 @@ def run_test_search():
         return
 
     # 2. Call RPC
-    try:
-        # Try both common names
-        for rpc_name in ["match_hts_chunks", "match_chunks"]:
-            print(f"\n📡 Calling RPC: {rpc_name}...")
-            try:
-                response = supabase.rpc(
-                    rpc_name,
-                    {
-                        "query_embedding": vec,
-                        "match_count": 5,
-                    }
-                ).execute()
-                
-                if response.data:
-                    print(f"✅ Found {len(response.data)} results using '{rpc_name}':")
-                    for i, r in enumerate(response.data):
-                        print(f"  {i+1}. [{r.get('hts_code', 'N/A')}] {r.get('title', 'N/A')[:100]}")
-                else:
-                    print(f"⚠️ No results found using '{rpc_name}'.")
-            except Exception as e:
-                print(f"❌ RPC error with '{rpc_name}': {e}")
-                
-    except Exception as e:
-        print(f"❌ Search logic failed: {e}")
+    # Alphabetical order: match_count, query_embedding
+    params = {
+        "match_count": 5,
+        "query_embedding": vec,
+    }
+    
+    for rpc_name in ["match_hts_chunks", "match_chunks"]:
+        print(f"\n📡 Calling RPC: {rpc_name}...")
+        try:
+            start = time.time()
+            response = supabase.rpc(rpc_name, params).execute()
+            duration = time.time() - start
+            
+            if response.data:
+                print(f"✅ Found {len(response.data)} results using '{rpc_name}' in {duration:.4f}s:")
+                for i, r in enumerate(response.data):
+                    print(f"  {i+1}. [{r.get('hts_code', 'N/A')}] {r.get('title', 'N/A')[:100]} (Sim: {r.get('similarity', 'N/A')})")
+            else:
+                print(f"⚠️ No results found using '{rpc_name}' in {duration:.4f}s.")
+        except Exception as e:
+            print(f"❌ RPC error with '{rpc_name}': {e}")
+
+import time
 
 if __name__ == "__main__":
-    run_test_search()
+    q = "live horses"
+    if len(sys.argv) > 1:
+        q = sys.argv[1]
+    run_test_search(q)
