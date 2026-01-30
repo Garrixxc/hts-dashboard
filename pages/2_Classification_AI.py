@@ -1,6 +1,6 @@
 import streamlit as st
 from utils.llm import classify_hts
-from utils.ui import inject_global_css, page_header, result_card
+from utils.ui import inject_global_css, page_header
 from utils.llm_explain import explain_classification
 from utils.duty_rates import get_duty_category
 
@@ -91,82 +91,133 @@ if classify_button:
             
             # Display results
             for idx, r in enumerate(results):
-                # Calculate similarity score (assuming it's in the result)
-                similarity = r.get('similarity', 0.85)  # Default if not provided
+                # Calculate similarity score
+                similarity = r.get('similarity', 0.85)
                 
                 # Get duty category
                 duty_category = get_duty_category(r['hts_code'])
                 
-                # Create expandable section for each result
-                with st.expander(
-                    f"#{idx+1}: {r['hts_code']} - {r['title'][:80]}{'...' if len(r['title']) > 80 else ''}",
-                    expanded=(idx == 0)  # Expand first result by default
-                ):
-                    # Result card with all details
-                    result_card(
-                        hts_code=r['hts_code'],
-                        title=r['title'],
-                        description=r.get('normalized_text', 'No additional details available'),
-                        similarity=similarity,
-                        duty_rate=duty_category,
-                        show_explain=False  # We'll handle explanation separately
-                    )
+                # Build confidence badge HTML
+                percentage = int(similarity * 100)
+                if percentage >= 90:
+                    badge_class = "confidence-high"
+                    icon = "✓"
+                    label = "Excellent Match"
+                elif percentage >= 75:
+                    badge_class = "confidence-medium"
+                    icon = "~"
+                    label = "Good Match"
+                elif percentage >= 60:
+                    badge_class = "confidence-low"
+                    icon = "!"
+                    label = "Fair Match"
+                else:
+                    badge_class = "confidence-very-low"
+                    icon = "?"
+                    label = "Weak Match"
+                
+                confidence_html = f'''
+                    <div class="confidence-badge {badge_class}">
+                        <span style="font-size: 16px;">{icon}</span>
+                        <span>{percentage}% - {label}</span>
+                    </div>
+                '''
+                
+                # Build similarity bar HTML
+                similarity_html = f'''
+                    <div class="similarity-bar">
+                        <div class="similarity-fill" style="width: {percentage}%;"></div>
+                    </div>
+                '''
+                
+                # Build duty tag HTML
+                duty_classes = {
+                    "Free": "duty-free",
+                    "Low": "duty-low",
+                    "Medium": "duty-medium",
+                    "High": "duty-high",
+                }
+                duty_class = duty_classes.get(duty_category, "duty-medium")
+                duty_html = f'<span class="duty-tag {duty_class}">{duty_category} Duty</span>'
+                
+                # Render the result card
+                result_html = f'''
+                <div class="result-card">
+                    <div class="result-header">
+                        <div>
+                            <div class="hts-code">{r['hts_code']}</div>
+                            <div class="hts-title">{r['title']}</div>
+                            <div style="margin-top: 8px;">{duty_html}</div>
+                        </div>
+                        <div>
+                            {confidence_html}
+                        </div>
+                    </div>
+                    {similarity_html}
+                    <details style="margin-top: 16px;">
+                        <summary style="cursor: pointer; color: rgba(255, 255, 255, 0.7); font-size: 14px;">
+                            Show full description
+                        </summary>
+                        <div class="hts-description">{r.get('normalized_text', 'No additional details available')}</div>
+                    </details>
+                </div>
+                '''
+                
+                st.markdown(result_html, unsafe_allow_html=True)
+                
+                # AI Explanation section (outside the main card)
+                if show_explanations:
+                    explain_key = f"explain_{idx}_{r['hts_code']}"
                     
-                    # AI Explanation section
-                    if show_explanations:
-                        st.markdown("---")
-                        st.markdown("### 🤖 AI Explanation")
-                        
-                        # Generate explanation button
-                        explain_key = f"explain_{idx}_{r['hts_code']}"
-                        
-                        if explain_key not in st.session_state:
-                            st.session_state[explain_key] = None
-                        
-                        col_a, col_b = st.columns([1, 4])
-                        
-                        with col_a:
-                            if st.button(
-                                "Generate Explanation" if not st.session_state[explain_key] else "Regenerate",
-                                key=f"btn_{explain_key}",
-                                use_container_width=True
-                            ):
-                                with st.spinner("🧠 Generating explanation..."):
-                                    explanation = explain_classification(
-                                        product_description=desc,
-                                        hts_code=r['hts_code'],
-                                        hts_title=r['title'],
-                                        context=r.get('normalized_text', '')
-                                    )
-                                    st.session_state[explain_key] = explanation
-                        
-                        # Display explanation if generated
-                        if st.session_state[explain_key]:
-                            st.markdown(
-                                f"""
-                                <div class="glass-card" style="margin-top: 16px;">
-                                    {st.session_state[explain_key]}
-                                </div>
-                                """,
-                                unsafe_allow_html=True
-                            )
+                    if explain_key not in st.session_state:
+                        st.session_state[explain_key] = None
                     
-                    # Action buttons
-                    st.markdown("<br>", unsafe_allow_html=True)
-                    col1, col2, col3 = st.columns(3)
+                    col_a, col_b = st.columns([1, 4])
                     
-                    with col1:
-                        if st.button("📋 Copy Code", key=f"copy_{idx}", use_container_width=True):
-                            st.code(r['hts_code'], language=None)
-                            st.success("Code displayed above!")
+                    with col_a:
+                        if st.button(
+                            "🤖 Generate Explanation" if not st.session_state[explain_key] else "🔄 Regenerate",
+                            key=f"btn_{explain_key}",
+                            use_container_width=True
+                        ):
+                            with st.spinner("🧠 Generating explanation..."):
+                                explanation = explain_classification(
+                                    product_description=desc,
+                                    hts_code=r['hts_code'],
+                                    hts_title=r['title'],
+                                    context=r.get('normalized_text', '')
+                                )
+                                st.session_state[explain_key] = explanation
                     
-                    with col2:
-                        if st.button("🔍 View in Browser", key=f"browser_{idx}", use_container_width=True):
-                            st.info(f"Navigate to HTS Browser and search for: {r['hts_code']}")
-                    
-                    with col3:
-                        if st.button("📊 See Analytics", key=f"analytics_{idx}", use_container_width=True):
-                            st.info("Analytics feature coming soon!")
+                    # Display explanation if generated
+                    if st.session_state[explain_key]:
+                        explanation_html = f'''
+                        <div class="glass-card" style="margin-top: 16px; margin-bottom: 24px;">
+                            <h4 style="color: var(--accent-blue); margin-bottom: 12px;">🤖 AI Explanation</h4>
+                            <div style="font-size: 14px; line-height: 1.6;">
+                                {st.session_state[explain_key]}
+                            </div>
+                        </div>
+                        '''
+                        st.markdown(explanation_html, unsafe_allow_html=True)
+                
+                # Action buttons
+                col1, col2, col3 = st.columns(3)
+                
+                with col1:
+                    if st.button("📋 Copy Code", key=f"copy_{idx}", use_container_width=True):
+                        st.code(r['hts_code'], language=None)
+                        st.success("Code displayed above!")
+                
+                with col2:
+                    if st.button("🔍 View in Browser", key=f"browser_{idx}", use_container_width=True):
+                        st.info(f"Navigate to HTS Browser and search for: {r['hts_code']}")
+                
+                with col3:
+                    if st.button("📊 See Analytics", key=f"analytics_{idx}", use_container_width=True):
+                        st.info("Analytics feature coming soon!")
+                
+                st.markdown("<br>", unsafe_allow_html=True)
 
 # Sidebar tips
 with st.sidebar:
