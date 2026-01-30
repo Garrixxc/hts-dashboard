@@ -18,32 +18,33 @@ def inject_global_css() -> None:
             /* CSS VARIABLES - Design Tokens */
             /* ============================================================================ */
             :root {
-                /* Primary Colors - Sapphire & Indigo */
-                --accent-blue: #3b82f6;      /* Blue-500 */
-                --accent-indigo: #6366f1;    /* Indigo-500 */
+                /* Primary Colors - Forest & Ember */
+                --accent-green: #10b981;     /* Emerald-500 / Forest */
+                --accent-orange: #f59e0b;    /* Amber-500 / Ember */
+                --accent-yellow: #fbbf24;    /* Yellow-400 */
                 --accent-slate: #94a3b8;     /* Slate-400 */
                 
-                /* Semantic Colors - Professional Tones */
-                --success: #10b981;          /* Emerald-500 */
-                --warning: #f59e0b;          /* Amber-500 */
-                --error: #ef4444;            /* Red-500 */
-                --info: #0ea5e9;             /* Sky-500 */
+                /* Semantic Colors */
+                --success: #10b981;
+                --warning: #f59e0b;
+                --error: #ef4444;
+                --info: #3b82f6;
                 
-                /* Backgrounds - Slate Deep */
-                --bg-dark: #020617;          /* Slate-950 */
-                --bg-card: #0f172a;          /* Slate-900 */
-                --bg-glass: rgba(15, 23, 42, 0.6);
-                --bg-glass-hover: rgba(15, 23, 42, 0.8);
+                /* Backgrounds - Deep Forest Slate */
+                --bg-dark: #052e16;          /* Green-950 */
+                --bg-card: #064e3b;          /* Emerald-900 / Dark Green */
+                --bg-glass: rgba(6, 78, 59, 0.6);
+                --bg-glass-hover: rgba(6, 78, 59, 0.8);
                 
                 /* Borders */
                 --border-subtle: rgba(255, 255, 255, 0.05);
                 --border-medium: rgba(255, 255, 255, 0.1);
                 
-                /* Shadows - Professional Elevation */
+                /* Shadows */
                 --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-                --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-                --shadow-premium: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+                --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                --shadow-premium: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
                 
                 /* Typography */
                 --font-heading: 'Inter', -apple-system, sans-serif;
@@ -55,14 +56,14 @@ def inject_global_css() -> None:
             .main {
                 background-color: var(--bg-dark);
                 background-image: 
-                    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0, transparent 50%), 
-                    radial-gradient(at 50% 0%, rgba(99, 102, 241, 0.03) 0, transparent 50%);
+                    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.1) 0, transparent 50%), 
+                    radial-gradient(at 50% 0%, rgba(245, 158, 11, 0.05) 0, transparent 50%);
             }
             
             .gradient-bg {
-                background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(2, 6, 23, 0.9) 100%);
+                background: linear-gradient(135deg, rgba(6, 78, 59, 0.8) 0%, rgba(5, 46, 22, 0.9) 100%);
                 border: 1px solid var(--border-subtle);
-                border-top: 1px solid rgba(59, 130, 246, 0.2);
+                border-top: 1px solid rgba(16, 185, 129, 0.2);
             }
             
             /* ============================================================================ */
@@ -80,14 +81,14 @@ def inject_global_css() -> None:
             }
             
             .glass-card:hover {
-                border-color: rgba(59, 130, 246, 0.3);
+                border-color: rgba(16, 185, 129, 0.3);
                 box-shadow: var(--shadow-lg);
                 transform: translateY(-2px);
             }
             
             .glass-card-premium {
                 background: var(--bg-card);
-                border: 1px solid rgba(59, 130, 246, 0.2);
+                border: 1px solid rgba(245, 158, 11, 0.2);
                 border-radius: 16px;
                 padding: 28px;
                 margin-bottom: 20px;
@@ -103,7 +104,7 @@ def inject_global_css() -> None:
                 left: 0;
                 right: 0;
                 height: 2px;
-                background: linear-gradient(90deg, var(--accent-blue), var(--accent-indigo));
+                background: linear-gradient(90deg, var(--accent-green), var(--accent-orange));
             }
             
             /* ============================================================================ */
@@ -255,7 +256,7 @@ def inject_global_css() -> None:
             /* ============================================================================ */
             
             .btn-primary {
-                background: linear-gradient(135deg, var(--accent-blue), var(--accent-indigo));
+                background: linear-gradient(135deg, var(--accent-green), var(--accent-orange));
                 color: white;
                 padding: 10px 20px;
                 border-radius: 8px;
@@ -343,7 +344,7 @@ def inject_global_css() -> None:
             }
             
             .result-card:hover {
-                border-color: rgba(59, 130, 246, 0.4);
+                border-color: rgba(245, 158, 11, 0.4);
                 transform: translateY(-2px);
                 box-shadow: var(--shadow-lg);
             }

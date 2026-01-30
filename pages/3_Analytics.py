@@ -1,6 +1,6 @@
 import streamlit as st
 import textwrap
-from utils.ui import inject_global_css, page_header, glass_card
+from utils.ui import inject_global_css, page_header, glass_card, metric_card
 
 st.set_page_config(
     page_title="Analytics - HTS Dashboard",
