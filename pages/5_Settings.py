@@ -80,18 +80,18 @@ col1, col2 = st.columns(2)
 with col1:
     streamlit_cloud = textwrap.dedent("""
     <div style="padding: 20px;">
-        <h4 style="color: var(--accent-blue); margin-bottom: 16px;">☁️ Streamlit Cloud</h4>
-        <p style="font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.8);">
+        <h4 style="color: var(--accent-primary); margin-bottom: 16px;">☁️ Streamlit Cloud</h4>
+        <p style="font-size: 14px; line-height: 1.6; color: var(--text-muted);">
             In Streamlit Cloud, these values are stored in:
         </p>
-        <ol style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.7); margin-top: 12px;">
+        <ol style="font-size: 13px; line-height: 1.8; color: var(--text-muted); margin-top: 12px;">
             <li>Go to your app dashboard</li>
             <li>Click <strong>Settings</strong></li>
             <li>Navigate to <strong>Secrets</strong></li>
             <li>Add your environment variables in TOML format</li>
         </ol>
         <br>
-        <p style="font-size: 12px; color: rgba(255, 255, 255, 0.5);">
+        <p style="font-size: 12px; color: var(--text-muted); opacity: 0.6;">
             Example format:<br>
             <code>OPENAI_API_KEY = "sk-..."</code>
         </p>
@@ -102,17 +102,17 @@ with col1:
 with col2:
     local_dev = textwrap.dedent("""
     <div style="padding: 20px;">
-        <h4 style="color: var(--accent-purple); margin-bottom: 16px;">💻 Local Development</h4>
-        <p style="font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.8);">
+        <h4 style="color: var(--accent-secondary); margin-bottom: 16px;">💻 Local Development</h4>
+        <p style="font-size: 14px; line-height: 1.6; color: var(--text-muted);">
             For local development, you can:
         </p>
-        <ol style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.7); margin-top: 12px;">
+        <ol style="font-size: 13px; line-height: 1.8; color: var(--text-muted); margin-top: 12px;">
             <li>Export variables in your terminal</li>
             <li>Use a <code>.env</code> file with python-dotenv</li>
             <li>Set them in your IDE configuration</li>
         </ol>
         <br>
-        <p style="font-size: 12px; color: rgba(255, 255, 255, 0.5);">
+        <p style="font-size: 12px; color: var(--text-muted); opacity: 0.6;">
             Example:<br>
             <code>export OPENAI_API_KEY="sk-..."</code>
         </p>
@@ -161,10 +161,10 @@ with st.sidebar:
     
     security = textwrap.dedent("""
     <div class="glass-card">
-        <p style="font-size: 13px; line-height: 1.6; color: rgba(255, 255, 255, 0.8);">
+        <p style="font-size: 13px; line-height: 1.6; color: var(--text-main);">
             <strong>⚠️ Important:</strong>
         </p>
-        <ul style="font-size: 12px; line-height: 1.8; color: rgba(255, 255, 255, 0.7); margin-top: 8px;">
+        <ul style="font-size: 12px; line-height: 1.8; color: var(--text-muted); margin-top: 8px;">
             <li>Never commit API keys to Git</li>
             <li>Use environment variables</li>
             <li>Rotate keys regularly</li>

@@ -168,8 +168,8 @@ with st.sidebar:
     st.markdown(
         textwrap.dedent("""
         <div class="glass-card">
-            <h4 style="color: var(--accent-blue); margin-bottom: 12px;">How Search Works:</h4>
-            <p style="font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.8);">
+            <h4 style="color: var(--accent-primary); margin-bottom: 12px;">How Search Works:</h4>
+            <p style="font-size: 14px; line-height: 1.6; color: var(--text-muted);">
                 Our AI understands <strong>context and meaning</strong>, not just keywords. 
                 It can match synonyms, technical terms, and related concepts.
             </p>

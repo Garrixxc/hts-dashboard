@@ -181,15 +181,15 @@ with st.sidebar:
     st.markdown(
         textwrap.dedent("""
         <div class="glass-card">
-            <p style="font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.8);">
+            <p style="font-size: 14px; line-height: 1.6; color: var(--text-main);">
                 The <strong>Chunk Browser</strong> lets you explore the raw knowledge base 
                 that powers semantic search and classification.
             </p>
             <br>
-            <p style="font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.8);">
+            <p style="font-size: 14px; line-height: 1.6; color: var(--text-muted);">
                 Each "chunk" is a piece of HTS documentation with:
             </p>
-            <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.7);">
+            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-muted);">
                 <li>HTS code</li>
                 <li>Title/description</li>
                 <li>Full text content</li>
@@ -205,8 +205,8 @@ with st.sidebar:
     st.markdown(
         textwrap.dedent("""
         <div class="glass-card">
-            <h4 style="color: var(--accent-blue); margin-bottom: 12px;">Use Cases:</h4>
-            <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
+            <h4 style="color: var(--accent-primary); margin-bottom: 12px;">Use Cases:</h4>
+            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-muted);">
                 <li>Debug search results</li>
                 <li>Explore HTS structure</li>
                 <li>Verify embeddings</li>
@@ -223,8 +223,8 @@ with st.sidebar:
     st.markdown(
         textwrap.dedent("""
         <div class="glass-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 12px;">Quick Stats:</h4>
-            <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
+            <h4 style="color: var(--accent-secondary); margin-bottom: 12px;">Quick Stats:</h4>
+            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-muted);">
                 <li>📊 35,000+ total chunks</li>
                 <li>🔢 1536-dim embeddings</li>
                 <li>⚡ Real-time search</li>

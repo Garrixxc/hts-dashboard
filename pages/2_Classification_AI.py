@@ -245,12 +245,12 @@ with st.sidebar:
     st.markdown(
         textwrap.dedent("""
         <div class="glass-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 12px;">Understanding Scores:</h4>
-            <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
-                <li><span class="badge-success" style="padding: 2px 8px; border-radius: 4px;">90%+</span> Excellent match</li>
-                <li><span class="badge-info" style="padding: 2px 8px; border-radius: 4px;">75-89%</span> Good match</li>
-                <li><span class="badge-warning" style="padding: 2px 8px; border-radius: 4px;">60-74%</span> Fair match</li>
-                <li><span class="badge-error" style="padding: 2px 8px; border-radius: 4px;">&lt;60%</span> Weak match</li>
+            <h4 style="color: var(--accent-primary); margin-bottom: 12px;">Understanding Scores:</h4>
+            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-muted);">
+                <li><span style="color: var(--success); font-weight: 700;">90%+</span> Excellent match</li>
+                <li><span style="color: var(--info); font-weight: 700;">75-89%</span> Good match</li>
+                <li><span style="color: var(--warning); font-weight: 700;">60-74%</span> Fair match</li>
+                <li><span style="color: var(--error); font-weight: 700;">&lt;60%</span> Weak match</li>
             </ul>
         </div>
         """),
@@ -262,14 +262,14 @@ with st.sidebar:
     st.markdown(
         textwrap.dedent("""
         <div class="glass-card">
-            <h4 style="color: var(--accent-pink); margin-bottom: 12px;">Duty Categories:</h4>
-            <ul style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
-                <li><span class="duty-free" style="padding: 2px 8px; border-radius: 4px;">Free</span> 0% duty</li>
-                <li><span class="duty-low" style="padding: 2px 8px; border-radius: 4px;">Low</span> 0-5% duty</li>
-                <li><span class="duty-medium" style="padding: 2px 8px; border-radius: 4px;">Medium</span> 5-15% duty</li>
-                <li><span class="duty-high" style="padding: 2px 8px; border-radius: 4px;">High</span> 15%+ duty</li>
+            <h4 style="color: var(--accent-secondary); margin-bottom: 12px;">Duty Categories:</h4>
+            <ul style="font-size: 13px; line-height: 1.8; color: var(--text-muted);">
+                <li><span style="color: var(--success); font-weight: 700;">Free</span> 0% duty</li>
+                <li><span style="color: var(--accent-secondary); font-weight: 700;">Low</span> 0-5% duty</li>
+                <li><span style="color: var(--warning); font-weight: 700;">Medium</span> 5-15% duty</li>
+                <li><span style="color: var(--error); font-weight: 700;">High</span> 15%+ duty</li>
             </ul>
-            <p style="font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-top: 12px;">
+            <p style="font-size: 11px; color: var(--text-muted); opacity: 0.6; margin-top: 12px;">
                 ⚠️ Estimates only. Verify with official sources.
             </p>
         </div>

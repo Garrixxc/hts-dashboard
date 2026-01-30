@@ -11,49 +11,64 @@ st.set_page_config(
 inject_global_css()
 
 page_header(
-    "Analytics Dashboard",
-    "Track your search history, most-used codes, and classification patterns over time",
+    "Enterprise Intelligence Overview",
+    "Monitor classification velocity, accuracy trends, and regulatory risk across the organization.",
     icon="📊"
 )
 
-st.markdown('<h3 class="section-title" style="font-size: 20px; margin-top: 24px;">📈 Enterprise Intelligence Overview</h3>', unsafe_allow_html=True)
+# Top Metrics
+st.markdown('<h2 class="section-title">📈 System-Wide Performance</h2>', unsafe_allow_html=True)
+m_col1, m_col2, m_col3, m_col4 = st.columns(4)
 
-# Mock Data for professional lookup
-col1, col2, col3 = st.columns(3)
-with col1:
+with m_col1:
     metric_card("Monthly Classifications", "1,284", "📅")
-with col2:
-    metric_card("Accuracy Rate", "99.2%", "🎯")
-with col3:
-    metric_card("Compliance Risk Score", "Low", "🛡️")
+
+with m_col2:
+    metric_card("Average Accuracy", "98.2%", "🎯")
+
+with m_col3:
+    metric_card("Compliance Risk", "Minimal", "🛡️")
+
+with m_col4:
+    metric_card("Processing Speed", "142ms", "⚡")
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# Main Intelligence Card
-content = textwrap.dedent("""
-    <div style="padding: 24px;">
-        <h3 style="color: var(--accent-blue); margin-bottom: 16px; font-weight: 700;">Classification Velocity</h3>
-        <p style="font-size: 14px; line-height: 1.6; color: var(--accent-slate); margin-bottom: 24px;">
-            Real-time monitoring of HTS alignment efficiency across global trade lanes.
-        </p>
-        
-        <div style="display: flex; gap: 8px; align-items: flex-end; height: 120px; margin-bottom: 20px;">
-            <div style="flex: 1; background: var(--accent-blue); height: 40%; border-radius: 4px 4px 0 0; opacity: 0.6;"></div>
-            <div style="flex: 1; background: var(--accent-blue); height: 65%; border-radius: 4px 4px 0 0; opacity: 0.7;"></div>
-            <div style="flex: 1; background: var(--accent-blue); height: 85%; border-radius: 4px 4px 0 0; opacity: 0.8;"></div>
-            <div style="flex: 1; background: var(--accent-blue); height: 55%; border-radius: 4px 4px 0 0; opacity: 0.6;"></div>
-            <div style="flex: 1; background: var(--accent-blue); height: 95%; border-radius: 4px 4px 0 0; opacity: 0.9;"></div>
-            <div style="flex: 1; background: var(--accent-blue); height: 75%; border-radius: 4px 4px 0 0; opacity: 0.8;"></div>
-            <div style="flex: 1; background: var(--accent-blue); height: 80%; border-radius: 4px 4px 0 0; opacity: 0.8;"></div>
-        </div>
-        
-        <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--accent-slate);">
-            <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
-        </div>
-    </div>
-""").strip()
+# Main Analytics Section
+col_left, col_right = st.columns([2, 1])
 
-glass_card(content, premium=True)
+with col_left:
+    st.markdown('<h3 class="section-title" style="font-size: 20px;">📉 Classification Velocity</h3>', unsafe_allow_html=True)
+    
+    # Custom chart visualization using CSS
+    chart_content = textwrap.dedent("""
+        <div style="height: 300px; display: flex; align-items: flex-end; gap: 10px; padding: 20px; background: #f1f5f9; border-radius: 12px; border: 1px solid var(--border-subtle);">
+            <div style="flex: 1; height: 40%; background: linear-gradient(to top, var(--accent-primary), var(--accent-vibrant)); border-radius: 4px 4px 0 0;" title="Jan"></div>
+            <div style="flex: 1; height: 55%; background: linear-gradient(to top, var(--accent-primary), var(--accent-vibrant)); border-radius: 4px 4px 0 0;" title="Feb"></div>
+            <div style="flex: 1; height: 48%; background: linear-gradient(to top, var(--accent-primary), var(--accent-vibrant)); border-radius: 4px 4px 0 0;" title="Mar"></div>
+            <div style="flex: 1; height: 70%; background: linear-gradient(to top, var(--accent-primary), var(--accent-vibrant)); border-radius: 4px 4px 0 0;" title="Apr"></div>
+            <div style="flex: 1; height: 85%; background: linear-gradient(to top, var(--accent-primary), var(--accent-vibrant)); border-radius: 4px 4px 0 0;" title="May"></div>
+            <div style="flex: 1; height: 75%; background: linear-gradient(to top, var(--accent-primary), var(--accent-vibrant)); border-radius: 4px 4px 0 0;" title="Jun"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 10px; color: var(--text-muted); font-size: 11px; padding: 0 10px;">
+            <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
+        </div>
+    """).strip()
+    glass_card(chart_content, premium=True)
+
+with col_right:
+    st.markdown('<h3 class="section-title" style="font-size: 20px;">🛡️ Risk Profile</h3>', unsafe_allow_html=True)
+    
+    risk_content = textwrap.dedent("""
+        <div style="padding: 24px; text-align: center;">
+            <div style="font-size: 48px; margin-bottom: 20px;">✅</div>
+            <h4 style="color: var(--text-main); margin-bottom: 8px;">Compliance Status: Low</h4>
+            <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6;">
+                99.4% of classifications align with USITC benchmarks. No anomalies detected.
+            </p>
+        </div>
+    """).strip()
+    glass_card(risk_content, premium=False)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -65,29 +80,29 @@ col_a, col_b = st.columns(2)
 with col_a:
     distribution = textwrap.dedent("""
         <div style="padding: 20px;">
-            <h4 style="color: #fff; margin-bottom: 16px; font-size: 16px;">Top Chapters by Volume</h4>
+            <h4 style="color: var(--text-main); margin-bottom: 16px; font-size: 16px;">Top Chapters by Volume</h4>
             <div style="margin-bottom: 12px;">
-                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; color: var(--text-muted);">
                     <span>Chapter 84: Machinery & Parts</span><span>42%</span>
                 </div>
-                <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px;">
-                    <div style="width: 42%; height: 100%; background: var(--accent-blue); border-radius: 10px;"></div>
+                <div style="width: 100%; height: 6px; background: #e2e8f0; border-radius: 10px;">
+                    <div style="width: 42%; height: 100%; background: var(--accent-primary); border-radius: 10px;"></div>
                 </div>
             </div>
             <div style="margin-bottom: 12px;">
-                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; color: var(--text-muted);">
                     <span>Chapter 85: Electrical Equipment</span><span>28%</span>
                 </div>
-                <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px;">
-                    <div style="width: 28%; height: 100%; background: var(--accent-blue); border-radius: 10px;"></div>
+                <div style="width: 100%; height: 6px; background: #e2e8f0; border-radius: 10px;">
+                    <div style="width: 28%; height: 100%; background: var(--accent-primary); border-radius: 10px;"></div>
                 </div>
             </div>
             <div style="margin-bottom: 12px;">
-                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; color: var(--text-muted);">
                     <span>Chapter 39: Plastics</span><span>15%</span>
                 </div>
-                <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px;">
-                    <div style="width: 15%; height: 100%; background: var(--accent-blue); border-radius: 10px;"></div>
+                <div style="width: 100%; height: 6px; background: #e2e8f0; border-radius: 10px;">
+                    <div style="width: 15%; height: 100%; background: var(--accent-primary); border-radius: 10px;"></div>
                 </div>
             </div>
         </div>
@@ -97,16 +112,39 @@ with col_a:
 with col_b:
     summary = textwrap.dedent("""
         <div style="padding: 20px;">
-            <h4 style="color: #fff; margin-bottom: 16px; font-size: 16px;">Compliance Stability</h4>
-            <p style="font-size: 14px; color: var(--accent-slate); line-height: 1.6;">
+            <h4 style="color: var(--text-main); margin-bottom: 16px; font-size: 16px;">Compliance Stability</h4>
+            <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">
                 System maintains high alignment stability across core industrial categories. No significant drift detected in last 30 business cycles.
             </p>
             <div style="margin-top: 16px; padding: 12px; background: rgba(16, 185, 129, 0.05); border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.2);">
-                <span style="color: var(--success); font-weight: 600; font-size: 13px;">✓ System Status: Optimal</span>
+                <span style="color: var(--success); font-weight: 600; font-size: 13px;">✓ Analysis Status: Optimal</span>
             </div>
         </div>
     """).strip()
     glass_card(summary, premium=False)
+
+viz_content = textwrap.dedent("""
+<div style="padding: 20px; text-align: center;">
+    <p style="font-size: 14px; color: var(--text-muted);">
+        Predictive classification trends for upcoming fiscal cycles.
+    </p>
+    <br>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px;">
+        <div style="padding: 16px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
+            <div style="font-size: 32px; color: var(--accent-primary);">📊</div>
+            <p style="margin-top: 8px; font-size: 13px; color: var(--text-main);">Trends</p>
+        </div>
+        <div style="padding: 16px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
+            <div style="font-size: 32px; color: var(--accent-secondary);">🎯</div>
+            <p style="margin-top: 8px; font-size: 13px; color: var(--text-main);">Accuracy</p>
+        </div>
+        <div style="padding: 16px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
+            <div style="font-size: 32px; color: var(--accent-vibrant);">⚡</div>
+            <p style="margin-top: 8px; font-size: 13px; color: var(--text-main);">Response</p>
+        </div>
+    </div>
+</div>
+""").strip()
 
 glass_card(viz_content, premium=False)
 
@@ -116,14 +154,14 @@ with st.sidebar:
     
     tips = textwrap.dedent("""
     <div class="glass-card">
-        <p style="font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.8);">
-            <strong>To implement analytics:</strong>
+        <p style="font-size: 14px; line-height: 1.6; color: var(--text-main);">
+            <strong>To implement live analytics:</strong>
         </p>
-        <ol style="font-size: 13px; line-height: 1.8; color: rgba(255, 255, 255, 0.7); margin-top: 12px;">
+        <ol style="font-size: 13px; line-height: 1.8; color: var(--text-muted); margin-top: 12px;">
             <li>Create a Supabase table for logs</li>
             <li>Add logging to search functions</li>
-            <li>Use Plotly for visualizations</li>
-            <li>Set up scheduled aggregations</li>
+            <li>Use <code>st.cache_data</code> for speed</li>
+            <li>Aggregate by HTS Chapter</li>
         </ol>
     </div>
     """).strip()

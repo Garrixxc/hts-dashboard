@@ -18,56 +18,68 @@ def inject_global_css() -> None:
             /* CSS VARIABLES - Design Tokens */
             /* ============================================================================ */
             :root {
-                /* Primary Colors - Forest & Ember */
-                --accent-green: #10b981;     /* Emerald-500 / Forest */
-                --accent-orange: #f59e0b;    /* Amber-500 / Ember */
-                --accent-yellow: #fbbf24;    /* Yellow-400 */
-                --accent-slate: #94a3b8;     /* Slate-400 */
+                /* Primary Colors - Vibrant & Bright */
+                --accent-primary: #4f46e5;    /* Indigo-600 */
+                --accent-secondary: #f59e0b;  /* Amber-500 */
+                --accent-vibrant: #10b981;    /* Emerald-500 */
+                --accent-stone: #64748b;      /* Slate-500 */
                 
                 /* Semantic Colors */
-                --success: #10b981;
-                --warning: #f59e0b;
-                --error: #ef4444;
-                --info: #3b82f6;
+                --success: #059669;          /* Emerald-600 */
+                --warning: #d97706;          /* Amber-600 */
+                --error: #dc2626;            /* Red-600 */
+                --info: #2563eb;             /* Blue-600 */
                 
-                /* Backgrounds - Deep Forest Slate */
-                --bg-dark: #052e16;          /* Green-950 */
-                --bg-card: #064e3b;          /* Emerald-900 / Dark Green */
-                --bg-glass: rgba(6, 78, 59, 0.6);
-                --bg-glass-hover: rgba(6, 78, 59, 0.8);
+                /* Backgrounds - Crisp Light */
+                --bg-main: #f8fafc;          /* Slate-50 */
+                --bg-card: #ffffff;          /* Pure White */
+                --bg-glass: rgba(255, 255, 255, 0.9);
+                --bg-glass-hover: #ffffff;
                 
                 /* Borders */
-                --border-subtle: rgba(255, 255, 255, 0.05);
-                --border-medium: rgba(255, 255, 255, 0.1);
+                --border-subtle: #e2e8f0;    /* Slate-200 */
+                --border-medium: #cbd5e1;    /* Slate-300 */
                 
-                /* Shadows */
-                --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-                --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-                --shadow-premium: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+                /* Shadows - Soft & Clean */
+                --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+                --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                --shadow-premium: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
                 
-                /* Typography */
+                /* Typography - Dark Contrast */
                 --font-heading: 'Inter', -apple-system, sans-serif;
                 --font-body: 'Inter', -apple-system, sans-serif;
+                --text-main: #0f172a;        /* Slate-900 */
+                --text-muted: #475569;      /* Slate-600 */
             }
             
             @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
+            /* Global Streamlit Reset to Light */
+            .main, .stApp {
+                background-color: var(--bg-main) !important;
+                color: var(--text-main) !important;
+            }
+            
+            .stMarkdown, .stText, p, span, li, label {
+                color: var(--text-main) !important;
+            }
+
             .main {
-                background-color: var(--bg-dark);
+                background-color: var(--bg-main);
                 background-image: 
-                    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.1) 0, transparent 50%), 
-                    radial-gradient(at 50% 0%, rgba(245, 158, 11, 0.05) 0, transparent 50%);
+                    radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.05) 0, transparent 50%), 
+                    radial-gradient(at 50% 0%, rgba(245, 158, 11, 0.03) 0, transparent 50%);
             }
             
             .gradient-bg {
-                background: linear-gradient(135deg, rgba(6, 78, 59, 0.8) 0%, rgba(5, 46, 22, 0.9) 100%);
+                background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
                 border: 1px solid var(--border-subtle);
-                border-top: 1px solid rgba(16, 185, 129, 0.2);
+                border-top: 2px solid var(--accent-primary);
             }
             
             /* ============================================================================ */
-            /* GLASSMORPHISM COMPONENTS */
+            /* GLASSMORPHISM COMPONENTS (Now Light Mode) */
             /* ============================================================================ */
             
             .glass-card {
@@ -81,14 +93,14 @@ def inject_global_css() -> None:
             }
             
             .glass-card:hover {
-                border-color: rgba(16, 185, 129, 0.3);
+                border-color: var(--accent-primary);
                 box-shadow: var(--shadow-lg);
                 transform: translateY(-2px);
             }
             
             .glass-card-premium {
                 background: var(--bg-card);
-                border: 1px solid rgba(245, 158, 11, 0.2);
+                border: 1px solid var(--border-subtle);
                 border-radius: 16px;
                 padding: 28px;
                 margin-bottom: 20px;
@@ -103,8 +115,8 @@ def inject_global_css() -> None:
                 top: 0;
                 left: 0;
                 right: 0;
-                height: 2px;
-                background: linear-gradient(90deg, var(--accent-green), var(--accent-orange));
+                height: 4px;
+                background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
             }
             
             /* ============================================================================ */
@@ -115,7 +127,7 @@ def inject_global_css() -> None:
                 font-family: var(--font-heading);
                 font-size: 48px;
                 font-weight: 800;
-                color: #f8fafc;
+                color: var(--text-main);
                 margin-bottom: 12px;
                 letter-spacing: -0.02em;
             }
@@ -124,7 +136,7 @@ def inject_global_css() -> None:
                 font-family: var(--font-heading);
                 font-size: 24px;
                 font-weight: 700;
-                color: #f1f5f9;
+                color: var(--text-main);
                 margin-bottom: 16px;
                 display: flex;
                 align-items: center;
@@ -133,7 +145,7 @@ def inject_global_css() -> None:
             
             .subtitle {
                 font-size: 18px;
-                color: var(--accent-slate);
+                color: var(--text-muted);
                 margin-bottom: 32px;
                 line-height: 1.6;
                 font-weight: 400;
@@ -256,7 +268,7 @@ def inject_global_css() -> None:
             /* ============================================================================ */
             
             .btn-primary {
-                background: linear-gradient(135deg, var(--accent-green), var(--accent-orange));
+                background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
                 color: white;
                 padding: 10px 20px;
                 border-radius: 8px;
@@ -344,7 +356,7 @@ def inject_global_css() -> None:
             }
             
             .result-card:hover {
-                border-color: rgba(245, 158, 11, 0.4);
+                border-color: var(--accent-primary);
                 transform: translateY(-2px);
                 box-shadow: var(--shadow-lg);
             }
@@ -394,18 +406,18 @@ def inject_global_css() -> None:
             /* ============================================================================ */
             
             .text-gradient {
-                background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+                background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
             }
             
             .text-muted {
-                color: rgba(255, 255, 255, 0.6);
+                color: var(--text-muted);
             }
             
             .text-accent {
-                color: var(--accent-blue);
+                color: var(--accent-primary);
             }
             
             .mt-4 { margin-top: 16px; }
@@ -563,7 +575,7 @@ def result_card(
         </div>
         {similarity_html}
         <details style="margin-top: 16px;">
-            <summary style="cursor: pointer; color: rgba(255, 255, 255, 0.7); font-size: 14px;">
+            <summary style="cursor: pointer; color: var(--text-muted); font-size: 14px;">
                 Show full description
             </summary>
             <div class="hts-description">{description}</div>
@@ -582,10 +594,10 @@ def metric_card(label: str, value: str, icon: str = "📊") -> None:
     content = textwrap.dedent(f"""
         <div style="text-align: center;">
             <div style="font-size: 36px; margin-bottom: 8px;">{icon}</div>
-            <div style="font-size: 32px; font-weight: 700; color: var(--accent-blue); margin-bottom: 4px;">
+            <div style="font-size: 32px; font-weight: 700; color: var(--accent-primary); margin-bottom: 4px;">
                 {value}
             </div>
-            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.6);">
+            <div style="font-size: 14px; color: var(--text-muted);">
                 {label}
             </div>
         </div>
