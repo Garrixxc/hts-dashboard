@@ -52,14 +52,30 @@ def inject_global_css() -> None:
                 padding-left: 12px;
             }
             
-            /* Responsive adjustments */
-            @media (max-width: 768px) {
-                .glass-card { padding: 15px; }
-            }
-            
             /* Fix for overlapping text in some components */
             .stMarkdown p {
                 line-height: 1.6;
+            }
+
+            /* HTS Specific Tags */
+            .hts-code-text {
+                color: #58a6ff;
+                font-weight: 700;
+                font-size: 1.1em;
+                margin: 0;
+            }
+            
+            .hts-title-text {
+                font-weight: 600;
+                color: #f0f6fc;
+                margin-top: 4px;
+            }
+            
+            .hts-desc-text {
+                color: #8b949e;
+                font-size: 0.9em;
+                margin-top: 8px;
+                line-height: 1.5;
             }
         </style>
         """),
@@ -79,20 +95,13 @@ def page_header(title: str, subtitle: str | None = None, icon: str = "") -> None
 def glass_card(content: str, premium: bool = False) -> None:
     """Render a card with professional styling."""
     card_class = "glass-card-premium" if premium else "glass-card"
-    st.markdown(
-        f'<div class="{card_class}">{content}</div>',
-        unsafe_allow_html=True,
-    )
+    # Single line to prevent markdown parser breaks
+    st.markdown(f'<div class="{card_class}">{content}</div>', unsafe_allow_html=True)
 
 
 def metric_card(label: str, value: str) -> None:
     """Render a clean metric card."""
-    content = textwrap.dedent(f"""
-        <div style="text-align: left;">
-            <div style="font-size: 12px; color: #8b949e; text-transform: uppercase; font-weight: 600;">{label}</div>
-            <div style="font-size: 24px; font-weight: 700; color: #f0f6fc;">{value}</div>
-        </div>
-    """).strip()
+    content = f'<div style="text-align: left;"><div style="font-size: 12px; color: #8b949e; text-transform: uppercase; font-weight: 600;">{label}</div><div style="font-size: 24px; font-weight: 700; color: #f0f6fc;">{value}</div></div>'
     glass_card(content)
 
 
@@ -106,11 +115,7 @@ def confidence_badge(score: float) -> str:
 def similarity_bar(score: float) -> str:
     """Generate a simple similarity bar."""
     percentage = int(score * 100)
-    return textwrap.dedent(f"""
-        <div style="width: 100%; height: 4px; background: #30363d; border-radius: 2px; margin: 8px 0;">
-            <div style="width: {percentage}%; height: 100%; background: #58a6ff; border-radius: 2px;"></div>
-        </div>
-    """).strip()
+    return f'<div style="width: 100%; height: 4px; background: #30363d; border-radius: 2px; margin: 8px 0;"><div style="width: {percentage}%; height: 100%; background: #58a6ff; border-radius: 2px;"></div></div>'
 
 
 def result_card(
@@ -125,21 +130,17 @@ def result_card(
     confidence = confidence_badge(similarity) if similarity > 0 else ""
     sim_bar = similarity_bar(similarity) if similarity > 0 else ""
     
-    content = textwrap.dedent(f"""
-        <div style="margin-bottom: 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <div>
-                    <h3 style="margin: 0; color: #58a6ff;">{hts_code}</h3>
-                    <div style="font-weight: 600; font-size: 16px; margin-top: 4px;">{title}</div>
-                </div>
-                {confidence}
-            </div>
-            {sim_bar}
-            <div style="font-size: 14px; color: #8b949e; margin-top: 8px;">
-                {description}
-            </div>
-        </div>
-    """).strip()
+    # Remove all newlines within HTML to prevent Streamlit markdown parser from breaking out
+    content = (
+        f'<div style="margin-bottom: 20px;">'
+        f'<div style="display: flex; justify-content: space-between; align-items: flex-start;">'
+        f'<div><h3 class="hts-code-text">{hts_code}</h3><div class="hts-title-text">{title}</div></div>'
+        f'{confidence}'
+        f'</div>'
+        f'{sim_bar}'
+        f'<div class="hts-desc-text">{description}</div>'
+        f'</div>'
+    )
     
     glass_card(content)
 
